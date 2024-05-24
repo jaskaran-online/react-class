@@ -18,10 +18,10 @@ let students = ['Rupinder', 'Amandeep', 'Harsimran', 'Jaskaran'];
 // Experession 1
 for (let index = 0; index < students.length; index++) {
     const element = students[index];
-    // console.log(
-    //     index,
-    //     element
-    // )
+    console.log(
+        index,
+        element
+    )
 }
 
 
@@ -42,7 +42,7 @@ for (let index = 0; ; index++) {
     }
 }
 
-// Experssion 3
+// Expression 3
 // Example without expression 3 in a for loop
 
 for (let index = 0; index < students.length;) {

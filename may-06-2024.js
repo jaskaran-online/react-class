@@ -106,7 +106,11 @@ console.log(studentData[0])
 //     + studentData[0].courses[0].grades[0].grade + ", " + studentData[0].contact_info.email
 // )
 
-document.write(studentData[0].name + ", "
+console.log(studentData[0].name + ", "
     + studentData[0].courses[0].course_name + ", "
+    + studentData[0].courses[1].course_name + ", "
     + studentData[0].courses[0].grades[0].semester + ", Grade :"
+    + studentData[0].courses[0].grades[1].semester + ", Grade :"
+    + studentData[0].courses[0].grades[0].semester + ", Grade :"
+    + studentData[0].courses[1].grades[1].semester + ", Grade :"
     + studentData[0].courses[0].grades[0].grade + ", " + studentData[0].contact_info.email)

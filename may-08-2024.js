@@ -48,4 +48,6 @@ const student = {
     }
 }
 // console.log(student)
-console.log(`${student.extraactivities.club.club1} , ${student.academicinfo.currentcourses[2]} , ${student.extraactivities.volunteering.event1} ,${student.contectinfo.phonenumber}, ${student.contectinfo.address.city}`)
+console.log(`
+    ${student.extraactivities.club.club1} , ${student.academicinfo.currentcourses[2]} , ${student.extraactivities.volunteering.event1} ,${student.contectinfo.phonenumber}, ${student.contectinfo.address.city}
+`)
