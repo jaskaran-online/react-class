@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Double Click Heart</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: rgb(191, 27, 27);
+            opacity: 0;
+            transition: ease all 1s;
+        }
+
+    </style>
+</head>
+
+<body class="flex items-center justify-center h-screen bg-gray-100">
+    <div class="relative">
+        <img id="image" src="https://www.akamai.com/site/im-demo/perceptual-standard.jpg?imbypass=true" alt="Sample"
+            class="rounded shadow-lg cursor-pointer" width="600">
+        <div id="heart" class="heart">❤️</div>
+    </div>
+
+    <script>
+        document.getElementById('image').addEventListener('dblclick', function () {
+            const heart = document.getElementById('heart');
+            heart.style.opacity = 1;
+            heart.style.scale = 2;
+            setTimeout(() => {
+                heart.style.opacity = 0;
+                heart.style.scale = 1;
+            }, 2000);
+        });
+    </script>
+</body>
+
+</html>
