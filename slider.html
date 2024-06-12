@@ -122,32 +122,32 @@
 
         const imageElement = document.querySelector('img');
         const indicatorsContainer = document.querySelector('.indicators');
-        const right = document.querySelector('.right');
-        const left = document.querySelector('.left');
+            const rightBtnElement = document.querySelector('.right');
+            const leftBtnElement = document.querySelector('.left');
 
         // Create indicators
         for (let i = 0; i < imagesArray.length; i++) {
-            const indicator = document.createElement('div');
+            const indicator = document.createElement('span');
             indicator.classList.add('indicator');
             indicator.setAttribute('data-index', i);
             indicatorsContainer.appendChild(indicator);
         }
 
-        const indicators = document.querySelectorAll('.indicator');
+            const indicatorElements = document.querySelectorAll('.indicator');
 
         // Function to update the image and active indicator
         function updateImage(index) {
             imageElement.src = imagesArray[index].src;
             imageElement.alt = imagesArray[index].alt;
 
-            indicators.forEach(ind => ind.classList.remove('active'));
-            indicators[index].classList.add('active');
+            indicatorElements.forEach(ind => ind.classList.remove('active'));
+            indicatorElements[index].classList.add('active');
         }
 
         // Initialize the first image
         updateImage(currentIndex);
 
-        indicators.forEach(indicator => {
+            indicatorElements.forEach(indicator => {
             indicator.addEventListener('click', () => {
                 const index = parseInt(indicator.getAttribute('data-index'));
                 currentIndex = index;
@@ -155,7 +155,7 @@
             });
         });
 
-        right.addEventListener('click', () => {
+            rightBtnElement.addEventListener('click', () => {
             currentIndex++;
             if (currentIndex >= imagesArray.length) {
                 currentIndex = 0;
@@ -163,7 +163,7 @@
             updateImage(currentIndex);
         });
 
-        left.addEventListener('click', () => {
+            leftBtnElement.addEventListener('click', () => {
             currentIndex--;
             if (currentIndex < 0) {
                 currentIndex = imagesArray.length - 1;
@@ -177,7 +177,7 @@
                 currentIndex = 0;
             }
             updateImage(currentIndex);
-        }, 2000);
+        }, 5000);
     </script>
 </body>
 

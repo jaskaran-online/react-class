@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+            margin: 0;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .user-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 20px;
+            flex-direction: column;
+        }
+
+        .user-item {
+            margin-bottom: 10px;
+            cursor: pointer;
+            position: relative;
+            padding-left: 50px;
+            display: flex;
+            align-items: center;
+            border-bottom: #d4d4d4 1px solid;
+        }
+
+        .user-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+        }
+
+        .user-image {
+            display: none;
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <ul class="user-list" id="user-list">
+            <!-- Users will be dynamically added here -->
+        </ul>
+        <img class="user-image" id="user-image" alt="User Image">
+
+    </div>
+
+    <script>
+        // Array of users
+        const users = [
+            {
+                name: 'John Doe',
+                image: 'https://randomuser.me/api/portraits/men/1.jpg'
+            },
+            {
+                name: 'Jane Smith',
+                image: 'https://randomuser.me/api/portraits/women/1.jpg'
+            },
+            {
+                name: 'Mark Johnson',
+                image: 'https://randomuser.me/api/portraits/men/2.jpg'
+            },
+            {
+                name: 'Emily Davis',
+                image: 'https://randomuser.me/api/portraits/women/2.jpg'
+            }
+        ];
+
+        // Function to add users to the list
+        function addUsers(users) {
+            const userList = document.getElementById('user-list');
+
+            users.forEach(function (user) {
+                const userItem = document.createElement('li');
+                userItem.classList.add('user-item');
+                userItem.setAttribute('data-image', user.image);
+
+                const userImage = document.createElement('img');
+                userImage.src = user.image;
+                userImage.alt = user.name;
+
+                let text = document.createTextNode(user.name);
+
+                userItem.appendChild(userImage);
+                userItem.appendChild(text);
+
+                userList.appendChild(userItem);
+            });
+        }
+
+        // Call the function to add users
+        addUsers(users);
+
+        const userImage = document.getElementById('user-image');
+
+        // Add event listeners for hover effects
+        const allListItems = document.querySelectorAll('.user-item');
+
+        allListItems.forEach(item => {
+
+            item.addEventListener('mouseenter', function () {
+                const imageUrl = this.getAttribute('data-image');
+                console.log(imageUrl);
+                userImage.src = imageUrl;
+                userImage.style.display = 'block';
+            });
+
+            item.addEventListener('mouseleave', function () {
+                userImage.style.display = 'none';
+            });
+
+            item.addEventListener('mousemove', function (e) {
+                console.log(e);
+                userImage.style.top = `${e.clientY}px`;
+                userImage.style.left = `${e.clientX}px`;
+            });
+
+        });
+
+    </script>
+</body>
+
+</html>
