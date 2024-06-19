@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User List</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
     <style>
         body {
             display: flex;
@@ -63,49 +63,57 @@
             pointer-events: none;
         }
 
+        .filter-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #d4d4d4;
+            border-radius: 5px;
+        }
+
     </style>
 </head>
 
 <body>
     <div class="card">
+        <input type="text" id="filter-input" class="filter-input" placeholder="Search users by name..." />
         <ul class="user-list" id="user-list">
             <!-- Users will be dynamically added here -->
         </ul>
-        <img class="user-image" id="user-image" alt="User Image">
-
+        <img class="user-image" id="user-image" alt="User Image" />
     </div>
 
     <script>
         // Array of users
         const users = [
             {
-                name: 'John Doe',
-                image: 'https://randomuser.me/api/portraits/men/1.jpg'
+                name: "John Doe",
+                image: "https://randomuser.me/api/portraits/men/1.jpg",
             },
             {
-                name: 'Jane Smith',
-                image: 'https://randomuser.me/api/portraits/women/1.jpg'
+                name: "Jane Smith",
+                image: "https://randomuser.me/api/portraits/women/1.jpg",
             },
             {
-                name: 'Mark Johnson',
-                image: 'https://randomuser.me/api/portraits/men/2.jpg'
+                name: "Mark Johnson",
+                image: "https://randomuser.me/api/portraits/men/2.jpg",
             },
             {
-                name: 'Emily Davis',
-                image: 'https://randomuser.me/api/portraits/women/2.jpg'
-            }
+                name: "Emily Davis",
+                image: "https://randomuser.me/api/portraits/women/2.jpg",
+            },
         ];
 
         // Function to add users to the list
         function addUsers(users) {
-            const userList = document.getElementById('user-list');
-
+            const userList = document.getElementById("user-list");
+            userList.innerHTML = ""; // Clear existing list
             users.forEach(function (user) {
-                const userItem = document.createElement('li');
-                userItem.classList.add('user-item');
-                userItem.setAttribute('data-image', user.image);
+                const userItem = document.createElement("li");
+                userItem.classList.add("user-item");
+                userItem.setAttribute("data-image", user.image);
 
-                const userImage = document.createElement('img');
+                const userImage = document.createElement("img");
                 userImage.src = user.image;
                 userImage.alt = user.name;
 
@@ -118,35 +126,58 @@
             });
         }
 
-        // Call the function to add users
-        addUsers(users);
 
-        const userImage = document.getElementById('user-image');
+                const userImage = document.getElementById("user-image");
 
-        // Add event listeners for hover effects
-        const allListItems = document.querySelectorAll('.user-item');
+                // Function to add event listeners to user items
+                function addEventListeners() {
 
-        allListItems.forEach(item => {
+                const allListItems = document.querySelectorAll(".user-item");
 
-            item.addEventListener('mouseenter', function () {
-                const imageUrl = this.getAttribute('data-image');
-                console.log(imageUrl);
-                userImage.src = imageUrl;
-                userImage.style.display = 'block';
+                allListItems.forEach((item) => {
+                    item.addEventListener("mouseenter", function () {
+                        const imageUrl = this.getAttribute("data-image");
+                        userImage.src = imageUrl;
+                    userImage.style.display = "block";
+                });
+
+                item.addEventListener("mouseleave", function () {
+                    userImage.style.display = "none";
+                });
+
+                item.addEventListener("mousemove", function (e) {
+                    userImage.style.top = `${e.clientY}px`;
+                    userImage.style.left = `${e.clientX}px`;
+                });
+
+            });
+    }
+
+
+    // Call the function to add users
+    addUsers(users);
+
+    // Initial call to add event listeners
+    addEventListeners();
+
+    // Add input event listener for filter
+    const filterInput = document.getElementById("filter-input");
+
+    filterInput.addEventListener("input", function () {
+        console.log(this.value)
+        const filterValue = this.value.toLowerCase();
+        console.log(filterValue);
+
+        const filteredUsers = users.filter((user) => {
+            if (user.name.toLowerCase().includes(filterValue)) {
+                return user;
+            }
             });
 
-            item.addEventListener('mouseleave', function () {
-                userImage.style.display = 'none';
-            });
+        addUsers(filteredUsers);
+        addEventListeners();
 
-            item.addEventListener('mousemove', function (e) {
-                console.log(e);
-                userImage.style.top = `${e.clientY}px`;
-                userImage.style.left = `${e.clientX}px`;
-            });
-
-        });
-
+    });
     </script>
 </body>
 
