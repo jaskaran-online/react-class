@@ -8,12 +8,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playwrite+FR+Moderne:wght@100..400&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
 
     <style>
         body {
-            font-family: 'Playwrite FR Moderne', serif;
+            font-family: "Nunito", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
         }
 
     </style>
@@ -21,19 +22,51 @@
 
 <body class="flex items-center justify-center h-screen bg-blue-100">
     <div class="bg-white p-8 rounded shadow-md w-96">
-        <div id="quiz-container" class="flex flex-col space-y-4">
+        <div id="start-container" class="flex flex-col space-y-4">
+            <h2 class="text-2xl font-bold text-center">Welcome to the Quiz!</h2>
+            <input type="text" id="username-input" placeholder="Enter your username"
+                class="border-2 border-gray-300 p-2 rounded">
+            <button id="start-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Start Game
+            </button>
+            <button id="show-scoreboard-start"
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Show Scoreboard
+            </button>
+        </div>
+        <div id="quiz-container" class="flex flex-col space-y-4 hidden">
             <!-- Quiz content will be injected here -->
         </div>
         <div id="score-container" class="mt-4 hidden">
             <h2 class="text-2xl font-bold text-center">Your Score: <span id="score">0</span>/5</h2>
             <span class="text-center block text-5xl mt-5" id="emoji"></span>
-            <button id="startAgain"
-                class="text-center block mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Start
-                Again</button>
+            <button id="show-scoreboard"
+                class="text-center block mt-5 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">
+                Show Scoreboard
+            </button>
+            <button id="start-again"
+                class="text-center block mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                Play Again
+            </button>
+        </div>
+        <div id="scoreboard-container" class="mt-4 hidden">
+            <h2 class="text-2xl font-bold text-center mb-4">Scoreboard</h2>
+            <div id="scoreboard-list" class="space-y-2">
+                <!-- Scoreboard entries will be injected here -->
+            </div>
+            <button id="back-to-start"
+                class="text-center block mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                Back to Start
+            </button>
         </div>
     </div>
 
     <script>
+        // Constants
+        const STORAGE_KEY = 'quizState';
+        const USERS_KEY = 'quizUsers';
+
+        // Quiz questions
         const questions = [
             {
                 question: "What is the capital of France? 🇫🇷",
@@ -62,33 +95,112 @@
             }
         ];
 
-        let currentQuestionIndex = 0;
-        let score = 0;
-
+        // DOM elements
+        const startContainer = document.getElementById('start-container');
         const quizContainer = document.getElementById('quiz-container');
         const scoreContainer = document.getElementById('score-container');
+        const scoreboardContainer = document.getElementById('scoreboard-container');
+
+        const usernameInput = document.getElementById('username-input');
+        const startButton = document.getElementById('start-button');
         const scoreElement = document.getElementById('score');
         const emojiElement = document.getElementById('emoji');
-        const startAgain = document.getElementById('startAgain');
+        const showScoreboardButton = document.getElementById('show-scoreboard');
+        const showScoreboardStartButton = document.getElementById('show-scoreboard-start');
+        const startAgainButton = document.getElementById('start-again');
+        const backToStartButton = document.getElementById('back-to-start');
+        const scoreboardList = document.getElementById('scoreboard-list');
 
+        // Quiz state
+        let quizState = {
+            currentUser: '',
+            currentUserId: '',
+            currentQuestionIndex: 0,
+            score: 0
+        };
+
+        // Initialize quiz
+        function initQuiz() {
+            startButton.addEventListener('click', startGame);
+            showScoreboardButton.addEventListener('click', showScoreboard);
+            showScoreboardStartButton.addEventListener('click', showScoreboard);
+            startAgainButton.addEventListener('click', resetQuiz);
+            backToStartButton.addEventListener('click', backToStart);
+        }
+
+        // Start the game
+        function startGame() {
+            const username = usernameInput.value.trim();
+            if (username) {
+                quizState.currentUser = username;
+                quizState.currentUserId = generateUniqueId();
+                quizState.currentQuestionIndex = 0;
+                quizState.score = 0;
+                saveQuizState();
+                startContainer.classList.add('hidden');
+                quizContainer.classList.remove('hidden');
+                showQuestion(quizState.currentQuestionIndex);
+            } else {
+                alert('Please enter a username to start the game.');
+            }
+        }
+
+        // Generate a unique ID
+        function generateUniqueId() {
+            return window.crypto.randomUUID();
+        }
+
+        // Load quiz state from localStorage
+        function loadQuizState() {
+            const savedState = localStorage.getItem(STORAGE_KEY);
+            if (savedState) {
+                quizState = JSON.parse(savedState);
+            }
+        }
+
+        // Save quiz state to localStorage
+        function saveQuizState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(quizState));
+        }
+
+        // Show current question
         function showQuestion(questionIndex) {
             const questionData = questions[questionIndex];
             quizContainer.innerHTML = `
         <h2 class="text-xl font-semibold">${questionData.question}</h2>
         <div id="options-container" class="flex flex-col space-y-2">
-
-          ${questionData.options.map((option, index) => `
-            <button class="option-btn py-2 px-4 bg-gray-200 text-black rounded hover:bg-gray-300" data-option="${option}">${option}</button>
-          `).join('')}
-          
+            ${questionData.options.map((option, index) => `
+                <button class="option-btn py-2 px-4 bg-gray-200 text-black rounded hover:bg-gray-300" data-option="${option}">${option}</button>
+            `).join('')}
         </div>
-      `;
+    `;
 
             document.querySelectorAll('.option-btn').forEach(button => {
                 button.addEventListener('click', () => selectAnswer(button.getAttribute('data-option'), questionIndex, button));
             });
         }
 
+        // Handle answer selection
+        function selectAnswer(selectedOption, questionIndex, button) {
+            const questionData = questions[questionIndex];
+            const isCorrect = selectedOption === questionData.answer;
+            if (isCorrect) quizState.score++;
+
+            updateBackgroundColor(isCorrect, button);
+
+            setTimeout(() => {
+                quizState.currentQuestionIndex++;
+                saveQuizState();
+
+                if (quizState.currentQuestionIndex < questions.length) {
+                    showQuestion(quizState.currentQuestionIndex);
+                } else {
+                    showScore();
+                }
+            }, 1000);
+        }
+
+        // Update background color based on answer correctness
         function updateBackgroundColor(isCorrect, button) {
             const correctClass = 'bg-green-400';
             const incorrectClass = 'bg-red-400';
@@ -102,53 +214,73 @@
             button.classList.add(isCorrect ? buttonCorrectClass : buttonIncorrectClass);
 
             setTimeout(() => {
-                document.body.classList.remove(correctClass);
-                document.body.classList.remove(incorrectClass);
+                document.body.classList.remove(correctClass, incorrectClass);
                 document.body.classList.add('bg-blue-100');
-                button.classList.remove(buttonCorrectClass);
-                button.classList.remove(buttonIncorrectClass);
+                button.classList.remove(buttonCorrectClass, buttonIncorrectClass);
                 button.classList.add(defaultClass);
             }, 1000);
         }
 
-        function selectAnswer(selectedOption, questionIndex, button) {
-            const questionData = questions[questionIndex];
-            const isCorrect = selectedOption === questionData.answer;
-            if (isCorrect) score++;
-
-            updateBackgroundColor(isCorrect, button);
-
-            setTimeout(() => {
-                currentQuestionIndex++;
-                if (currentQuestionIndex < questions.length) {
-                    showQuestion(currentQuestionIndex);
-                } else {
-                    showScore();
-                }
-            }, 1000);
-        }
-
+        // Show final score
         function showScore() {
             quizContainer.classList.add('hidden');
             scoreContainer.classList.remove('hidden');
-            scoreElement.textContent = score;
-
-            if (score >= 3) {
-                emojiElement.textContent = '🥳';
-            } else {
-                emojiElement.textContent = '😭';
-            }
+            scoreElement.textContent = quizState.score;
+            emojiElement.textContent = quizState.score >= 3 ? '🥳' : '😭';
+            saveUserScore();
         }
 
-        showQuestion(currentQuestionIndex);
+        // Save user score
+        function saveUserScore() {
+            let users = JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+            const existingUser = users.find(user => user.id === quizState.currentUserId);
+            if (existingUser) {
+                existingUser.score = Math.max(existingUser.score, quizState.score);
+            } else {
+                users.push({ id: quizState.currentUserId, username: quizState.currentUser, score: quizState.score });
+            }
 
-        startAgain.addEventListener('click', () => {
-            currentQuestionIndex = 0;
-            score = 0;
-            showQuestion(currentQuestionIndex);
-            quizContainer.classList.remove('hidden');
+            localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        }
+
+        // Show scoreboard
+        function showScoreboard() {
+            startContainer.classList.add('hidden');
             scoreContainer.classList.add('hidden');
-        });
+            scoreboardContainer.classList.remove('hidden');
+            const users = JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+            users.sort((a, b) => b.score - a.score);
+
+            scoreboardList.innerHTML = users.map((user, index) => `
+                <div class="flex justify-between items-center bg-gray-100 p-2 rounded">
+                    <span>${index + 1}. ${user.username}</span>
+                    <span class="font-bold">${user.score}/5</span>
+                </div>
+            `).join('');
+        }
+
+        // Reset quiz
+        function resetQuiz() {
+            quizState = {
+                currentUser: '',
+                currentUserId: '',
+                currentQuestionIndex: 0,
+                score: 0
+            };
+            saveQuizState();
+            backToStart();
+        }
+
+        // Back to start screen
+        function backToStart() {
+            scoreContainer.classList.add('hidden');
+            scoreboardContainer.classList.add('hidden');
+            startContainer.classList.remove('hidden');
+            usernameInput.value = '';
+        }
+
+        // Start the quiz
+        initQuiz();
     </script>
 </body>
 
