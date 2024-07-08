@@ -122,11 +122,40 @@
 
         // Initialize quiz
         function initQuiz() {
+            loadQuizState();
             startButton.addEventListener('click', startGame);
             showScoreboardButton.addEventListener('click', showScoreboard);
             showScoreboardStartButton.addEventListener('click', showScoreboard);
             startAgainButton.addEventListener('click', resetQuiz);
             backToStartButton.addEventListener('click', backToStart);
+
+            if (quizState.currentUser) {
+                resumeGame();
+            }
+        }
+
+        // Load quiz state from localStorage
+        function loadQuizState() {
+            const savedState = localStorage.getItem(STORAGE_KEY);
+            if (savedState) {
+                quizState = JSON.parse(savedState);
+            }
+        }
+
+        // Resume game
+        function resumeGame() {
+            startContainer.classList.add('hidden');
+            if (quizState.currentQuestionIndex < questions.length) {
+                quizContainer.classList.remove('hidden');
+                showQuestion(quizState.currentQuestionIndex);
+            } else {
+                showScore();
+            }
+        }
+
+        // Generate a unique ID
+        function generateUniqueId() {
+            return window.crypto.randomUUID();
         }
 
         // Start the game
@@ -138,24 +167,9 @@
                 quizState.currentQuestionIndex = 0;
                 quizState.score = 0;
                 saveQuizState();
-                startContainer.classList.add('hidden');
-                quizContainer.classList.remove('hidden');
-                showQuestion(quizState.currentQuestionIndex);
+                resumeGame();
             } else {
                 alert('Please enter a username to start the game.');
-            }
-        }
-
-        // Generate a unique ID
-        function generateUniqueId() {
-            return window.crypto.randomUUID();
-        }
-
-        // Load quiz state from localStorage
-        function loadQuizState() {
-            const savedState = localStorage.getItem(STORAGE_KEY);
-            if (savedState) {
-                quizState = JSON.parse(savedState);
             }
         }
 
@@ -185,7 +199,10 @@
         function selectAnswer(selectedOption, questionIndex, button) {
             const questionData = questions[questionIndex];
             const isCorrect = selectedOption === questionData.answer;
-            if (isCorrect) quizState.score++;
+            if (isCorrect) {
+                quizState.score++;
+                saveUserScore();
+            }
 
             updateBackgroundColor(isCorrect, button);
 
@@ -289,6 +306,7 @@
         function backToStart() {
             scoreContainer.classList.add('hidden');
             scoreboardContainer.classList.add('hidden');
+            quizContainer.classList.add('hidden');
             startContainer.classList.remove('hidden');
             usernameInput.value = '';
         }
