@@ -282,12 +282,17 @@
             const users = JSON.parse(localStorage.getItem(USERS_KEY)) || [];
             users.sort((a, b) => b.score - a.score);
 
-            scoreboardList.innerHTML = users.map((user, index) => `
+            let html = users.map((user, index) => `
                 <div class="flex justify-between items-center bg-gray-100 p-2 rounded">
                     <span>${index + 1}. ${user.username}</span>
                     <span class="font-bold">${user.score}/5</span>
                 </div>
-            `).join('');
+            `);
+
+            console.log(html);
+            console.log(users);
+            console.log(html.join(''));
+            scoreboardList.innerHTML = html.join('');
         }
 
         // Reset quiz
