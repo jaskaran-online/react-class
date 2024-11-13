@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open jaskaransingh.info Example</title>
+</head>
+<body>
+    <h1>Open jaskaransingh.info in a New Window</h1>
+    
+    <!-- Buttons to trigger different JavaScript functions -->
+    <button onclick="openBasicWindow()">Open Basic Window</button>
+    <button onclick="openCustomSizeWindow()">Open Custom Size Window</button>
+    <button onclick="openNoToolbarWindow()">Open Window Without Toolbar</button>
+    <button onclick="openFullScreenWindow()">Open Full-Screen Window</button>
+    
+    <!-- JavaScript code -->
+    <script>
+        // Opens a basic new window with the default settings
+        function openBasicWindow() {
+            window.open('https://www.jaskaransingh.info', '_blank');
+        }
+
+        // Opens a new window with a custom size
+        function openCustomSizeWindow() {
+            window.open('https://www.jaskaransingh.info', '_blank', 'width=800,height=600,resizable=yes,scrollbars=yes');
+        }
+
+        // Opens a new window without a toolbar and other features
+        function openNoToolbarWindow() {
+            window.open('https://www.jaskaransingh.info', '_blank', 'width=800,height=600,toolbar=no,menubar=no,status=no');
+        }
+
+        // Opens a new window in full-screen mode
+        function openFullScreenWindow() {
+            window.open('https://www.jaskaransingh.info', '_blank', 'fullscreen=yes');
+        }
+    </script>
+</body>
+</html>

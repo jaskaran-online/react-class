@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Task: Pseudo-class :target</title>
+    <style>
+      .faq-answer {
+        display: none;
+        padding: 10px;
+        background-color: #f0f0f0;
+        margin-bottom: 10px;
+      }
+      .faq-answer:target {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Frequently Asked Questions</h1>
+    <ul>
+      <li><a href="#q1">What is CSS?</a></li>
+      <li><a href="#q2">What is the :target pseudo-class?</a></li>
+      <li><a href="#q3">How does the :target pseudo-class work?</a></li>
+    </ul>
+
+    <div id="q1" class="faq-answer">
+      <h2>What is CSS?</h2>
+      <p>
+        CSS stands for Cascading Style Sheets. It is a styling language used to
+        describe the presentation of a document written in HTML or XML.
+      </p>
+    </div>
+
+    <div id="q2" class="faq-answer">
+      <h2>What is the :target pseudo-class?</h2>
+      <p>
+        The :target pseudo-class in CSS is used to style the target element of a
+        URI containing a fragment identifier.
+      </p>
+    </div>
+
+    <div id="q3" class="faq-answer">
+      <h2>How does the :target pseudo-class work?</h2>
+      <p>
+        When a URI's fragment identifier points to a target element in the
+        document, the :target pseudo-class is applied to that element. This
+        allows you to style the targeted element differently.
+      </p>
+    </div>
+  </body>
+</html>

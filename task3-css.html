@@ -1,0 +1,106 @@
+<!-- CSS Task:
+Your task is to write CSS that accomplishes the following:
+	1.	Style the FAQ container and items to create a visually appealing layout.
+	2.	Initially hide all answer paragraphs.
+	3.	Use the `:target` pseudo-selector to show the answer when its corresponding question is clicked.
+	4.	Add a visual indicator (like a different background color) to the active question.
+	5.	Implement a smooth transition effect when showing/hiding answers.
+Requirements:
+	1.	Use the `:target` pseudo-selector to show the answer when a question is clicked.
+	2.	Implement a transition effect for showing/hiding answers (hint: use `max-height` for a smooth animation).
+	3.	Style the questions to look clickable (e.g., change cursor on hover).
+	4.	Ensure that the page is responsive and looks good on both desktop and mobile devices.
+This task will help beginners understand how the `:target` pseudo-selector can be used to create interactive elements without JavaScript, while also practicing CSS transitions and responsive design principles. -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive FAQ</title>
+    <style>
+      /* Basic Reset Styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: auto;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .faq-container {
+        max-width: 600px;
+        margin: auto;
+      }
+
+      .faq-item {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        padding: 15px;
+      }
+
+      h2 {
+        margin: 0;
+      }
+
+      h2 a {
+        text-decoration: none;
+        color: #333;
+        display: block;
+        cursor: pointer;
+      }
+
+      h2 a:hover {
+        color: blue;
+      }
+
+      /* Hide answers initially */
+      .answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+      }
+
+      /* Show answer when targeted */
+      .faq-item:target > .answer {
+        max-height: 100px; /* Adjust based on content */
+      }
+
+      /* Visual indicator for active question */
+      .faq-item:target {
+        background-color: rgba(181, 239, 255, 0.518);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Frequently Asked Questions</h1>
+    <div class="faq-container">
+      <div class="faq-item" id="question1">
+        <h2><a href="#question1">What is CSS?</a></h2>
+        <p class="answer">
+          CSS stands for Cascading Style Sheets. It's a styling language used to
+          describe the presentation of a document written in HTML or XML.
+        </p>
+      </div>
+
+      <div class="faq-item" id="question2">
+        <h2><a href="#question2">What is the :target pseudo-selector?</a></h2>
+        <p class="answer">
+          The :target pseudo-selector in CSS is used to style the target element
+          of a URL containing a fragment identifier.
+        </p>
+      </div>
+
+      <div class="faq-item" id="question3">
+        <h2><a href="#question3">How does the :target selector work?</a></h2>
+        <p class="answer">
+          When a URL's fragment identifier matches the ID of an element in the
+          document, the :target selector applies styles to that element.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

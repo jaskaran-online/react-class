@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pseudo-classes Example</title>
+    <style>
+        /* nth-last-of-type */
+        p:nth-last-of-type(1) {
+            color: red;
+        }
+
+        /* nth-of-type */
+        p:nth-of-type(2) {
+            color: blue;
+        }
+
+        /* only-child */
+        .only-child-container p:only-child {
+            font-weight: bold;
+        }
+
+        /* first-of-type */
+        p:first-of-type {
+            text-decoration: underline;
+        }
+
+        /* last-of-type */
+        p:last-of-type {
+            font-style: italic;
+        }
+
+        /* empty */
+        div:empty {
+            border: 1px solid black;
+            height: 20px;
+        }
+
+        /* not */
+        p:not(.exclude) {
+            background-color: lightgray;
+        }
+
+        /* lang */
+        p:lang(en) {
+            border: 1px solid green;
+        }
+
+        /* link */
+        a:link {
+            color: orange;
+        }
+
+        /* active */
+        a:active {
+            color: purple;
+        }
+
+        /* target */
+        #target:target {
+            background-color: yellow;
+        }
+
+        /* checked */
+        input[type="checkbox"]:checked {
+            box-shadow: 0 0 10px 0 rgba(210, 9, 9, 0.799);
+        }
+
+        input[type="checkbox"]:checked + label {
+            box-shadow: 0 0 10px 0 rgba(210, 9, 9, 0.799);
+            color: red;
+        }
+
+        /* hover */
+        input[type="checkbox"]:checked + label:hover {
+            color: blue;
+        }
+    </style>
+
+</head>
+<body>
+    <div>
+        <p>First paragraph</p>
+        <p>Second paragraph</p>
+        <p class="exclude">Third paragraph</p>
+        <p>Fourth paragraph</p>
+    </div>
+
+    <div class="only-child-container">
+        <p>Only child paragraph</p>
+    </div>
+
+    <div></div> <!-- Empty div -->
+
+    <p lang="en">This paragraph is in English.</p>
+    <p lang="fr">Ce paragraphe est en français.</p>
+
+    <a href="#target">Go to target</a>
+
+    <div id="target">
+        <p>Targeted content</p>
+    </div>
+
+    <a href="jaskaransingh.info" target="_blank">Blank</a>
+    <a href="jaskaransingh.info" target="_parent">Parent</a>
+    <a href="jaskaransingh.info" target="_top">Top</a>
+    <a href="jaskaransingh.info" target="_top">Self</a>
+    
+    <h2>Languages</h2>
+    <div>
+        <input type="checkbox" id="english" name="language" value="english">
+        <label for="english">English</label>
+    </div>
+
+    <div>
+        <input type="checkbox" id="french" name="language" value="french">
+        <label for="french">French</label>
+    </div>
+
+    <div>
+        <input type="checkbox" id="spanish" name="language" value="spanish">
+        <label for="spanish">Spanish</label>
+    </div>
+</div>
+</body>
+</html>

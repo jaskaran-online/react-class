@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .custom-quote {
+        position: relative;
+        padding: 20px;
+        padding-left: 50px;
+        background-color: #f9f9f9;
+        border-left: 4px solid #ccc;
+      }
+
+      .custom-quote::before,
+      .custom-quote::after {
+        position: absolute;
+        font-size: 60px;
+        color: #ccc;
+      }
+
+      .custom-quote::before {
+        content: "\201C"; /* Left double quotation mark */
+        top: 0;
+        left: 10px;
+      }
+
+      .custom-quote::after {
+        content: "\201D"; /* Right double quotation mark */
+        bottom: -20px;
+        right: 10px;
+      }
+
+      .fancy-quote {
+        position: relative;
+        font-size: 1.25rem;
+        line-height: 1.6;
+        padding: 1.5em 1.5em 1.5em 3em;
+        margin: 2em 0;
+        background-color: #f9f9f9;
+        border-left: 5px solid #4caf50;
+      }
+
+      .fancy-quote::before {
+        content: "\201C"; /* Left double quotation mark */
+        position: absolute;
+        left: 10px;
+        top: 0;
+        font-size: 5em;
+        color: #4caf50;
+        opacity: 0.3;
+      }
+
+      .fancy-quote::after {
+        content: attr(data-author);
+        position: absolute;
+        bottom: -1.5em;
+        right: 0;
+        font-size: 0.875rem;
+        font-style: italic;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <blockquote class="custom-quote">
+      This is an example quote that demonstrates the use of CSS pseudo-elements
+      for decorative purposes.
+    </blockquote>
+
+    <div class="spinner"></div>
+
+    <blockquote class="fancy-quote" data-author="John Doe">
+      Life is what happens to you while you're busy making other plans.
+    </blockquote>
+  </body>
+</html>

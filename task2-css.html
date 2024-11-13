@@ -1,0 +1,108 @@
+<!-- CSS Selector Practice
+Create a simple HTML page with the following elements:
+	1.	A heading (h1) with the text “My Awesome Website”
+	2.	A navigation menu with 4 links: Home, About, Products, Contact
+	3.	Three paragraphs of text (use lorem ipsum if needed)
+	4.	An input field for email
+	5.	A button with the text “Submit”
+Then, apply the following styles using CSS pseudo-selectors and attribute selectors:
+	1.	Use the `:hover` pseudo-class to change the color of the navigation links when the mouse hovers over them.
+	2.	Use the `:first-child` pseudo-class to make the first paragraph text bold.
+	3.	Use the `:last-child` pseudo-class to add a bottom border to the last paragraph.
+	4.	Use the `:focus` pseudo-class to change the background color of the email input field when it’s selected.
+	5.	Use the `type="submit"` attribute selector to style the submit button with a different background color.
+	6.	Use the `:nth-child(2)` pseudo-class to change the font style of the second paragraph to italic.
+	7.	Use the `:not()` pseudo-class to apply a different text color to all paragraphs except the second one.
+	8.	Use the `href^="#"` attribute selector to add an underline to any navigation link that has a href attribute starting with “#”. -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Selector Practice</title>
+    <style>
+      /* Reset some default styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      nav {
+        margin-bottom: 20px;
+      }
+
+      a {
+        margin: 0 15px;
+        text-decoration: none;
+        color: black;
+      }
+
+      .content p {
+        margin: 10px 0;
+      }
+
+      /* 1. Change color of nav links on hover */
+      a:hover {
+        color: blue;
+      }
+
+      /* 2. Make the first paragraph bold */
+      .content p:first-child {
+        font-weight: bold;
+      }
+
+      /* 3. Add bottom border to the last paragraph */
+      .content p:last-child {
+        border-bottom: 1px solid gray;
+      }
+
+      /* 4. Change background color of email input on focus */
+      input[type="email"]:focus {
+        background-color: lightyellow;
+      }
+
+      /* 5. Style the submit button with different background color */
+      button[type="submit"] {
+        background-color: green;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+      }
+
+      /* 6. Change font style of the second paragraph to italic */
+      .content p:nth-child(2) {
+        font-style: italic;
+      }
+
+      /* 7. Apply a different color to all paragraphs except the second one */
+      .content p:not(:nth-child(2)) {
+        color: gray;
+      }
+
+      /* 8. Add underline to navigation links with href starting with '#' */
+      a[href^="#"] {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My Awesome Website</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#products">Products</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="content">
+      <p>First paragraph...</p>
+      <p>Second paragraph...</p>
+      <p>Third paragraph...</p>
+    </div>
+    <form>
+      <input type="email" placeholder="Enter your email" />
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex Grow, Shrink, and Basis Tutorial</title>
+    <style>
+      .container {
+        display: flex;
+        border: 3px solid #333;
+        margin: 20px;
+        min-height: 100px;
+      }
+
+      .flex-item {
+        padding: 20px;
+        color: white;
+        text-align: center;
+        margin: 5px;
+      }
+
+      /* Default items */
+      .item-1 {
+        background-color: #ff6b6b;
+      }
+      .item-2 {
+        background-color: #4ecdc4;
+      }
+      .item-3 {
+        background-color: #45b7d1;
+      }
+
+      /* Flex Grow Example */
+      .grow-container .item-1 {
+        flex-grow: 1;
+      }
+      .grow-container .item-2 {
+        flex-grow: 2;
+      }
+      .grow-container .item-3 {
+        flex-grow: 1;
+      }
+
+      /* Flex Shrink Example */
+      .shrink-container .flex-item {
+        width: 200px;
+      }
+      .shrink-container .item-1 {
+        flex-shrink: 1;
+      }
+      .shrink-container .item-2 {
+        flex-shrink: 2;
+      }
+      .shrink-container .item-3 {
+        flex-shrink: 3;
+      }
+
+      /* Flex Basis Example */
+      .basis-container .item-1 {
+        flex-basis: 100px;
+      }
+      .basis-container .item-2 {
+        flex-basis: 200px;
+      }
+      .basis-container .item-3 {
+        flex-basis: 300px;
+      }
+
+      /* Shorthand Example */
+      .shorthand-container .item-1 {
+        flex: 1 1 100px;
+      }
+      .shorthand-container .item-2 {
+        flex: 2 1 100px;
+      }
+      .shorthand-container .item-3 {
+        flex: 1 1 100px;
+      }
+
+      /* Styles for explanations */
+      .explanation {
+        margin: 20px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+      }
+
+      h2 {
+        color: #333;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Flex Grow Example</h2>
+    <div class="explanation">
+      <p>
+        flex-grow determines how remaining space is distributed. Item 2 grows
+        twice as much as items 1 and 3.
+      </p>
+    </div>
+    <div class="container grow-container">
+      <div class="flex-item item-1">flex-grow: 1</div>
+      <div class="flex-item item-2">flex-grow: 2</div>
+      <div class="flex-item item-3">flex-grow: 1</div>
+    </div>
+
+    <h2>Flex Shrink Example</h2>
+    <div class="explanation">
+      <p>
+        flex-shrink determines how items shrink when there isn't enough space.
+        Item 3 shrinks three times more than item 1.
+      </p>
+    </div>
+    <div class="container shrink-container">
+      <div class="flex-item item-1">flex-shrink: 1</div>
+      <div class="flex-item item-2">flex-shrink: 2</div>
+      <div class="flex-item item-3">flex-shrink: 3</div>
+    </div>
+
+    <h2>Flex Basis Example</h2>
+    <div class="explanation">
+      <p>
+        flex-basis sets the initial main size of a flex item before remaining
+        space is distributed.
+      </p>
+    </div>
+    <div class="container basis-container">
+      <div class="flex-item item-1">basis: 100px</div>
+      <div class="flex-item item-2">basis: 200px</div>
+      <div class="flex-item item-3">basis: 300px</div>
+    </div>
+
+    <h2>Flex Shorthand Example</h2>
+    <div class="explanation">
+      <p>
+        flex: grow shrink basis - The shorthand property combines all three
+        properties.
+      </p>
+    </div>
+    <div class="container shorthand-container">
+      <div class="flex-item item-1">flex: 1 1 100px</div>
+      <div class="flex-item item-2">flex: 2 1 100px</div>
+      <div class="flex-item item-3">flex: 1 1 100px</div>
+    </div>
+  </body>
+</html>

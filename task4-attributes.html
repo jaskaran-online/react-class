@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Attribute Selector Practice</title>
+    <style>
+      /* Style links with target attribute */
+      a[target] {
+        background-color: yellow;
+      }
+
+      /* Style links starting with https */
+      a[href^="https"] {
+        color: green;
+      }
+
+      /* Style links ending with .pdf */
+      a[href$=".pdf"] {
+        color: red;
+        content: "\f019"; /* Unicode for a download icon */
+        font-family: "Font Awesome 5 Free"; /* Assuming Font Awesome is used */
+        padding-right: 5px;
+      }
+
+      /* Style all input fields with a type attribute */
+      input[type] {
+        background-color: lightgray;
+        border-radius: 5px;
+        padding: 5px;
+        margin: 5px 0;
+      }
+
+      /* Style submit button */
+      input[type="submit"] {
+        background-color: blue;
+        color: white;
+        cursor: pointer;
+      }
+
+      /* Style email input */
+      input[type="email"] {
+        border: 2px solid #ff00ff;
+      }
+
+      /* Style elements based on data-importance attribute */
+      div[data-importance="high"] {
+        font-weight: bold;
+        color: red;
+      }
+      div[data-importance="medium"] {
+        font-weight: normal;
+        color: orange;
+      }
+      div[data-importance="low"] {
+        font-weight: lighter;
+        color: green;
+      }
+
+      /* Add star before required input fields */
+      input[required]::before {
+        content: "★ ";
+        color: red;
+      }
+
+      /* Style links containing "example" in href */
+      a[href*="example"] {
+        text-decoration: underline;
+      }
+
+      /* Style elements with title attribute containing "info" */
+      [title*="info"] {
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Attribute Selector Practice</h1>
+
+    <section id="links">
+      <h2>Links</h2>
+      <a href="https://example.com">Example</a>
+      <a href="https://example.org" target="_blank">Example (New Tab)</a>
+      <a href="document.pdf">Download PDF</a>
+      <a href="mailto:info@example.com">Email Us</a>
+    </section>
+
+    <section id="inputs">
+      <h2>Form Inputs</h2>
+      <input type="text" placeholder="Enter your name" required />
+      <input type="email" placeholder="Enter your email" />
+      <input type="password" placeholder="Enter your password" />
+      <input type="submit" value="Submit" />
+    </section>
+
+    <section id="custom-attributes">
+      <h2>Custom Attributes</h2>
+      <div data-importance="high">High Priority</div>
+      <div data-importance="medium">Medium Priority</div>
+      <div data-importance="low">Low Priority</div>
+    </section>
+  </body>
+</html>

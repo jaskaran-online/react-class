@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navigation Bar with Multi-level Menu</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      nav {
+        background-color: #333;
+        height: 70px;
+        position: relative;
+      }
+
+      .logo {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+        position: absolute;
+        left: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .nav-links {
+        float: right;
+        margin-right: 2rem;
+        list-style: none;
+      }
+
+      .nav-links li {
+        display: inline-block;
+        position: relative;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        padding: 25px 15px;
+        display: block;
+        transition: background-color 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        background-color: #444;
+      }
+
+      /* Dropdown Menu Styles */
+      .dropdown {
+        position: relative;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #333;
+        min-width: 200px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .dropdown-content a {
+        padding: 12px 15px;
+      }
+
+      /* Second Level Dropdown */
+      .sub-dropdown {
+        position: relative;
+      }
+
+      .sub-dropdown-content {
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: 0;
+        background-color: #333;
+        min-width: 200px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .sub-dropdown:hover .sub-dropdown-content {
+        display: block;
+      }
+
+      .hamburger {
+        display: none;
+        cursor: pointer;
+        color: white;
+        font-size: 1.5rem;
+        position: absolute;
+        right: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      /* Mobile Responsive Design */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: block;
+        }
+
+        .nav-links {
+          display: none;
+          width: 100%;
+          position: absolute;
+          top: 70px;
+          left: 0;
+          float: none;
+          margin: 0;
+          background-color: #333;
+        }
+
+        .nav-links li {
+          display: block;
+          border-top: 1px solid #444;
+        }
+
+        .nav-links.active {
+          display: block;
+        }
+
+        .dropdown-content {
+          position: static;
+          width: 100%;
+          box-shadow: none;
+          padding-left: 20px;
+        }
+
+        .sub-dropdown-content {
+          position: static;
+          width: 100%;
+          box-shadow: none;
+          padding-left: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="logo">Your Logo</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li class="dropdown">
+          <a href="#services">Services ▼</a>
+          <div class="dropdown-content">
+            <a href="#web">Web Development</a>
+            <div class="sub-dropdown">
+              <a href="#design">Design Services ▶</a>
+              <div class="sub-dropdown-content">
+                <a href="#ui">UI Design</a>
+                <a href="#ux">UX Design</a>
+                <a href="#graphic">Graphic Design</a>
+              </div>
+            </div>
+            <a href="#mobile">Mobile Development</a>
+            <a href="#consulting">Consulting</a>
+          </div>
+        </li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="hamburger">☰</div>
+    </nav>
+
+    <div
+      style="
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        line-height: 1.6;
+      "
+    >
+      <h2>How This Navbar Was Implemented (Without Flexbox)</h2>
+
+      <ol>
+        <li>
+          <strong>Basic Structure Setup</strong>
+          <ul>
+            <li>
+              Created a semantic <code>&lt;nav&gt;</code> element as the main
+              container
+            </li>
+            <li>
+              Used <code>display: inline-block</code> for logo and navigation
+              elements
+            </li>
+            <li>
+              Structured navigation items using <code>&lt;ul&gt;</code> and
+              <code>&lt;li&gt;</code> with <code>display: inline-block</code>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <strong>Styling the Navbar</strong>
+          <ul>
+            <li>Used <code>float</code> properties for horizontal alignment</li>
+            <li>Applied <code>clearfix</code> to handle floating elements</li>
+            <li>Set background color, padding, and other basic styles</li>
+            <li>Added hover effects on navigation links</li>
+          </ul>
+        </li>
+
+        <li>
+          <strong>Implementing Dropdowns</strong>
+          <ul>
+            <li>
+              Created dropdown menus using <code>position: absolute</code>
+            </li>
+            <li>Set parent elements to <code>position: relative</code></li>
+            <li>Added primary dropdown under "Services"</li>
+            <li>Implemented sub-dropdown under "Design Services"</li>
+            <li>Used CSS <code>:hover</code> to trigger dropdown visibility</li>
+          </ul>
+        </li>
+
+        <li>
+          <strong>Mobile Responsiveness</strong>
+          <ul>
+            <li>Added media query for screens smaller than 768px</li>
+            <li>
+              Converted inline elements to <code>display: block</code> for
+              mobile view
+            </li>
+            <li>Created hamburger menu icon using <code>float: right</code></li>
+            <li>
+              Modified dropdown positioning to <code>position: static</code> for
+              mobile
+            </li>
+            <li>Adjusted padding and spacing for mobile viewing</li>
+          </ul>
+        </li>
+
+        <li>
+          <strong>JavaScript Functionality</strong>
+          <ul>
+            <li>Added click event listener to hamburger menu</li>
+            <li>Implemented toggle functionality for mobile menu visibility</li>
+            <li>Used classList.toggle() for showing/hiding mobile menu</li>
+          </ul>
+        </li>
+      </ol>
+
+      <p>
+        <strong>Key Differences from Flexbox Version:</strong> Instead of using
+        modern flexbox properties, this implementation relies on traditional CSS
+        positioning techniques like <code>float</code>,
+        <code>display: inline-block</code>, and <code>position</code>
+        properties to achieve the layout.
+      </p>
+    </div>
+
+    <script>
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".nav-links");
+
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>

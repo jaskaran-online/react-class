@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Flex Wrap Tutorial</title>
+    <style>
+      .container {
+        border: 3px solid #333;
+        margin: 20px;
+        padding: 10px;
+        display: flex;
+        width: 400px;
+      }
+
+      .flex-item {
+        background-color: #3498db;
+        color: white;
+        margin: 5px;
+        padding: 15px;
+        width: 100px;
+        text-align: center;
+      }
+
+      /* Different wrap examples */
+      .nowrap {
+        flex-wrap: nowrap; /* Default behavior */
+      }
+
+      .wrap {
+        flex-wrap: wrap;
+      }
+
+      .wrap-reverse {
+        flex-wrap: wrap-reverse;
+      }
+
+      /* Styles for headings and descriptions */
+      h2 {
+        color: #2c3e50;
+        margin-left: 20px;
+      }
+
+      .description {
+        margin-left: 20px;
+        color: #7f8c8d;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Flex Wrap Tutorial</h1>
+
+    <h2>flex-wrap: nowrap</h2>
+    <p class="description">
+      Items will try to fit in one line, even if they need to shrink
+    </p>
+    <div class="container nowrap">
+      <div class="flex-item">Item 1</div>
+      <div class="flex-item">Item 2</div>
+      <div class="flex-item">Item 3</div>
+      <div class="flex-item">Item 4</div>
+      <div class="flex-item">Item 5</div>
+    </div>
+
+    <h2>flex-wrap: wrap</h2>
+    <p class="description">
+      Items will wrap to new lines if there isn't enough space
+    </p>
+    <div class="container wrap">
+      <div class="flex-item">Item 1</div>
+      <div class="flex-item">Item 2</div>
+      <div class="flex-item">Item 3</div>
+      <div class="flex-item">Item 4</div>
+      <div class="flex-item">Item 5</div>
+    </div>
+
+    <h2>flex-wrap: wrap-reverse</h2>
+    <p class="description">Items will wrap to new lines in reverse order</p>
+    <div class="container wrap-reverse">
+      <div class="flex-item">Item 1</div>
+      <div class="flex-item">Item 2</div>
+      <div class="flex-item">Item 3</div>
+      <div class="flex-item">Item 4</div>
+      <div class="flex-item">Item 5</div>
+    </div>
+
+    <div class="description">
+      <h3>Key Points:</h3>
+      <ul>
+        <li>
+          flex-wrap: nowrap - All items will stay in a single line (default)
+        </li>
+        <li>flex-wrap: wrap - Items will wrap to new lines when needed</li>
+        <li>
+          flex-wrap: wrap-reverse - Items wrap to new lines in reverse order
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

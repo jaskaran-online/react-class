@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Media Query Tutorial</title>
+    <style>
+      /* Base styles */
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .card {
+        background: #f4f4f4;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+      }
+
+      .example-box {
+        background: #2196f3;
+        color: white;
+        padding: 20px;
+        margin: 10px 0;
+        text-align: center;
+      }
+
+      code {
+        background: #eee;
+        padding: 2px 5px;
+        border-radius: 3px;
+      }
+
+      /* Media Query Examples */
+
+      /* Width-based queries */
+      @media (max-width: 768px) {
+        .responsive-element {
+          background: #ff9800;
+        }
+      }
+
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .responsive-element {
+          background: #4caf50;
+        }
+      }
+
+      /* Orientation example */
+      @media (orientation: landscape) {
+        .orientation-demo {
+          display: flex;
+          gap: 20px;
+        }
+      }
+
+      @media (orientation: portrait) {
+        .orientation-demo {
+          display: block;
+        }
+      }
+
+      /* Print styles */
+      @media print {
+        .no-print {
+          display: none;
+        }
+        body {
+          font-size: 12pt;
+        }
+      }
+
+      /* Dark mode example */
+      @media (prefers-color-scheme: dark) {
+        .dark-mode-demo {
+          background: #333;
+          color: white;
+        }
+      }
+
+      /* High contrast example */
+      @media (prefers-contrast: high) {
+        .contrast-demo {
+          background: black;
+          color: white;
+          border: 2px solid yellow;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Media Query Tutorial</h1>
+
+      <section class="card">
+        <h2>What are Media Queries?</h2>
+        <p>
+          Media queries allow you to apply CSS styles based on various device
+          characteristics and parameters like screen size, device orientation,
+          or display type. They are fundamental for creating responsive web
+          designs.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Basic Syntax</h2>
+        <code>@media media-type and (media-feature) { /* CSS rules */ }</code>
+        <p>Common media types include:</p>
+        <ul>
+          <li><code>all</code> - All devices</li>
+          <li><code>screen</code> - Computer screens, tablets, phones</li>
+          <li><code>print</code> - Printers and print preview</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Width-Based Breakpoints</h2>
+        <p>
+          The most common use of media queries is for responsive layouts based
+          on screen width:
+        </p>
+        <div class="responsive-element example-box">
+          This box changes color at different breakpoints:<br />
+          Blue (default) > 1024px<br />
+          Green 769px - 1024px<br />
+          Orange < 768px
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Orientation Example</h2>
+        <div class="orientation-demo">
+          <div class="example-box">Box 1</div>
+          <div class="example-box">Box 2</div>
+        </div>
+        <p>
+          These boxes display in a row for landscape and stack for portrait
+          orientation.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Print Styles</h2>
+        <div class="example-box">This will be visible when printing</div>
+        <div class="example-box no-print">This will not appear in print</div>
+      </section>
+
+      <section class="card">
+        <h2>Dark Mode Detection</h2>
+        <div class="dark-mode-demo example-box">
+          This box adapts to system dark mode preference
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Common Breakpoints</h2>
+        <ul>
+          <li>Mobile: <code>@media (max-width: 480px) { }</code></li>
+          <li>Tablet: <code>@media (max-width: 768px) { }</code></li>
+          <li>Laptop: <code>@media (max-width: 1024px) { }</code></li>
+          <li>Desktop: <code>@media (max-width: 1200px) { }</code></li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Best Practices</h2>
+        <ul>
+          <li>Start with mobile-first approach</li>
+          <li>Use relative units (em, rem, %)</li>
+          <li>Test across multiple devices</li>
+          <li>Keep breakpoints consistent</li>
+          <li>Don't base breakpoints on specific devices</li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>

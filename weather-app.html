@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Weather App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 min-h-screen flex items-center justify-center font-['Poppins']">
+    <div class="bg-white bg-opacity-10 p-8 rounded-3xl shadow-lg backdrop-blur-lg max-w-md w-full">
+        <h1 class="text-4xl font-bold text-white mb-6 text-center">Weather Now</h1>
+        <div class="flex mb-4">
+            <input type="text" id="locationInput" placeholder="Enter location" class="flex-grow px-4 py-3 rounded-l-full focus:outline-none bg-white bg-opacity-20 text-white placeholder-gray-300">
+            <button id="weatherButton" class="bg-yellow-400 text-white px-6 py-3 hover:bg-yellow-500 transition duration-300 font-semibold">Search</button>
+            <button id="currentLocationButton" class="bg-blue-500 text-white px-4 py-3 rounded-r-full hover:bg-blue-600 transition duration-300 font-semibold ml-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+            </button>
+        </div>
+        <div id="weatherInfo" class="text-white text-center mt-8"></div>
+        <div class="flex justify-center mt-4">
+            <button id="toggleTempUnit" class="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition duration-300 font-semibold">
+                Switch to °F
+            </button>
+        </div>
+        <div id="searchHistory" class="mt-6">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="text-white text-xl font-semibold">Recent Searches</h3>
+                <button id="clearHistoryButton" class="text-white hover:text-red-100 text-sm font-semibold focus:outline-none">
+                    Clear All
+                </button>
+            </div>
+            <ul id="searchList" class="space-y-2"></ul>
+        </div>
+    </div>
+
+    <script>
+        let searchHistory = JSON.parse(localStorage.getItem('weatherSearchHistory')) || [];
+        let isCelsius = true;
+
+        async function getWeather(location) {
+            const apiKey = '09e7a1b8b2844ba990b110125243108';
+            const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error.message);
+                }
+
+                updateWeatherInfo(data);
+                addToSearchHistory(data.location.name);
+            } catch (error) {
+                document.getElementById('weatherInfo').innerHTML = `<p class="text-red-500">${error.message}</p>`;
+            }
+        }
+
+        function updateWeatherInfo(data) {
+            const tempC = data.current.temp_c;
+            const tempF = data.current.temp_f;
+            const temp = isCelsius ? `${tempC}°C` : `${tempF}°F`;
+
+            const weatherInfo = `
+                <div class="bg-white bg-opacity-20 rounded-2xl p-6 mt-6">
+                    <h2 class="text-3xl font-semibold mb-2">${data.location.name}, ${data.location.country}</h2>
+                    <div class="flex items-center justify-center mb-4">
+                        <img src="${data.current.condition.icon}" alt="${data.current.condition.text}" class="w-20 h-20">
+                        <p class="text-5xl font-bold ml-4" id="tempDisplay">${temp}</p>
+                    </div>
+                    <p class="text-xl mb-4">${data.current.condition.text}</p>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p class="font-semibold">Humidity</p>
+                            <p>${data.current.humidity}%</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Wind</p>
+                            <p>${data.current.wind_kph} km/h</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('weatherInfo').innerHTML = weatherInfo;
+        }
+
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const { latitude, longitude } = position.coords;
+                        getWeather(`${latitude},${longitude}`);
+                    },
+                    error => {
+                        document.getElementById('weatherInfo').innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
+                    }
+                );
+            } else {
+                document.getElementById('weatherInfo').innerHTML = `<p class="text-red-500">Geolocation is not supported by this browser.</p>`;
+            }
+        }
+
+        function addToSearchHistory(location) {
+            searchHistory = [
+                location,
+                ...searchHistory.filter(item => item !== location)
+            ].slice(0, 5);
+            saveSearchHistory();
+            updateSearchHistoryUI();
+        }
+
+        function removeFromSearchHistory(location) {
+            searchHistory = searchHistory.filter(item => item !== location);
+            saveSearchHistory();
+            updateSearchHistoryUI();
+        }
+
+        function clearSearchHistory() {
+            searchHistory = [];
+            saveSearchHistory();
+            updateSearchHistoryUI();
+        }
+
+        function saveSearchHistory() {
+            localStorage.setItem('weatherSearchHistory', JSON.stringify(searchHistory));
+        }
+
+        function updateSearchHistoryUI() {
+            const searchList = document.getElementById('searchList');
+            searchList.innerHTML = '';
+            searchHistory.forEach(location => {
+                const li = document.createElement('li');
+                li.className = 'bg-white bg-opacity-20 text-white rounded-full px-4 py-2 flex justify-between items-center';
+                li.innerHTML = `
+                    <span class="cursor-pointer hover:underline">${location}</span>
+                    <button class="text-red-500 hover:text-red-700 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                `;
+                li.querySelector('span').addEventListener('click', () => getWeather(location));
+                li.querySelector('button').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    removeFromSearchHistory(location);
+                });
+                searchList.appendChild(li);
+            });
+
+            // Update visibility of Clear All button
+            const clearHistoryButton = document.getElementById('clearHistoryButton');
+            clearHistoryButton.style.display = searchHistory.length > 0 ? 'block' : 'none';
+        }
+
+        function toggleTemperatureUnit() {
+            isCelsius = !isCelsius;
+            const toggleButton = document.getElementById('toggleTempUnit');
+            toggleButton.textContent = isCelsius ? 'Switch to °F' : 'Switch to °C';
+
+            const tempDisplay = document.getElementById('tempDisplay');
+            if (tempDisplay) {
+                const currentTemp = parseFloat(tempDisplay.textContent);
+                const newTemp = isCelsius
+                    ? ((currentTemp - 32) * 5/9).toFixed(1) + '°C'
+                    : ((currentTemp * 9/5) + 32).toFixed(1) + '°F';
+                tempDisplay.textContent = newTemp;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const weatherButton = document.getElementById('weatherButton');
+            const currentLocationButton = document.getElementById('currentLocationButton');
+            const locationInput = document.getElementById('locationInput');
+            const clearHistoryButton = document.getElementById('clearHistoryButton');
+            const toggleTempUnitButton = document.getElementById('toggleTempUnit');
+
+            weatherButton.addEventListener('click', () => getWeather(locationInput.value));
+            currentLocationButton.addEventListener('click', getCurrentLocation);
+            clearHistoryButton.addEventListener('click', clearSearchHistory);
+            toggleTempUnitButton.addEventListener('click', toggleTemperatureUnit);
+
+            locationInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    getWeather(locationInput.value);
+                }
+            });
+
+            updateSearchHistoryUI();
+        });
+    </script>
+</body>
+</html>

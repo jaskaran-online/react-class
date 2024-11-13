@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div id="container" class="bg-blue-100 w-full h-screen">
+        <div id="SecondContainer" class="flex justify-center m-auto w-80 h-56 bg-zinc-100 flex-col text-center"></div>
+        <div id="scoreContainer" class="hidden w-80 h-56  justify-center m-auto  bg-zinc-100">
+            <h1 class="text-center text-2xl"></h1>
+            <p id="emoji" class=" text-4xl text-center"></p>
+            <button id="restart" onclick="StartAgain()">Back to Start</button>
+        </div>
+    </div>
+    <script>
+        const questions = [
+            {
+                question: "What is the capital of France? 🇫🇷",
+                options: ["Berlin", "Madrid", "Paris", "Rome"],
+                answer: "Paris",
+            },
+            {
+                question: "Which planet is known as the Red Planet? 🪐",
+                options: ["Earth", "Mars", "Jupiter", "Saturn"],
+                answer: "Mars",
+            },
+            {
+                question: "What is the largest ocean on Earth? 🌊",
+                options: ["Atlantic", "Indian", "Arctic", "Pacific"],
+                answer: "Pacific",
+            },
+            {
+                question: "Which country is famous for sushi? 🍣",
+                options: ["China", "Japan", "Korea", "Thailand"],
+                answer: "Japan",
+            },
+            {
+                question: "What is the boiling point of water? 💧",
+                options: ["90°C", "100°C", "110°C", "120°C"],
+                answer: "100°C",
+            },
+        ];
+
+        let questionIndex = 0;
+        let score = 0;
+
+        const mainContainer = document.getElementById("container");
+        const SecondContainer = document.getElementById("SecondContainer");
+        const scoreContainer = document.getElementById("scoreContainer");
+        const head1 = document.querySelector("h1");
+        const emoji = document.getElementById("emoji");
+        const RestartButton = document.getElementById("restart");
+
+        // backGround color 
+        const defaultColor = "bg-blue-100";
+        const correctAnswer = "bg-green-700";
+        const inCorrectAnswer = "bg-red-500";
+
+        function setCorrectAnswer() {
+            mainContainer.classList.replace(defaultColor, correctAnswer);
+            mainContainer.classList.replace(inCorrectAnswer, correctAnswer);
+        }
+
+        function inCorrectAnswers() {
+            mainContainer.classList.replace(defaultColor, inCorrectAnswer);
+            mainContainer.classList.replace(correctAnswer, inCorrectAnswer);
+        }
+
+        function StartAgain() {
+            scoreContainer.classList.add("hidden");
+            SecondContainer.classList.remove("hidden");
+            mainContainer.classList.replace(correctAnswer, defaultColor);
+            mainContainer.classList.replace(inCorrectAnswer, defaultColor);
+            score = 0;
+            questionIndex = 0;
+            DisplayQuestion(questionIndex);
+        }
+
+        function DisplayQuestion(index) {
+            SecondContainer.innerHTML = "";
+
+            if (index >= questions.length) {
+                SecondContainer.classList.add("hidden");
+                scoreContainer.classList.remove("hidden");
+                scoreDisplay();
+                return;
+            }
+
+            const currentQuestion = questions[index];
+            const heading = document.createElement("h1");
+            heading.classList.add("bg-blue-400", "text-gray-200", "text-2xl");
+
+            heading.innerText = currentQuestion.question;
+            SecondContainer.appendChild(heading);
+            const divContainer = document.createElement("div");
+
+            currentQuestion.options.forEach((item) => {
+                const button = document.createElement("button");
+                button.classList.add("btn");
+                button.style.display = "flex";
+                button.innerText = item;
+                divContainer.appendChild(button);
+                SecondContainer.appendChild(divContainer);
+            });
+
+            document.querySelectorAll(".btn").forEach(function (element) {
+                element.addEventListener("click", function () {
+                    if (element.innerHTML === currentQuestion.answer) {
+                        score++;
+                        setCorrectAnswer();
+                    } else {
+                        inCorrectAnswers();
+                    }
+                    questionIndex++;
+                    DisplayQuestion(questionIndex);
+                });
+            });
+        }
+
+        // for scoreShow
+        function scoreDisplay() {
+            head1.innerText = `Your score is ${score} / ${questions.length}`;
+            emoji.innerText = score >= 3 ? "🥳" : "😒";
+        }
+
+        DisplayQuestion(0);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Media Query Examples</title>
+    <style>
+      /* Base styles */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .card {
+        background: #f4f4f4;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+      }
+
+      .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .flex-item {
+        flex: 1;
+        min-width: 250px;
+      }
+
+      /* Mobile first approach */
+      .responsive-text {
+        font-size: 16px;
+        color: #333;
+      }
+
+      .responsive-box {
+        background: #2196f3;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      /* Tablet (768px and up) */
+      @media (min-width: 768px) {
+        .responsive-text {
+          font-size: 18px;
+        }
+
+        .responsive-box {
+          background: #4caf50;
+        }
+      }
+
+      /* Desktop (1024px and up) */
+      @media (min-width: 1024px) {
+        .responsive-text {
+          font-size: 20px;
+        }
+
+        .responsive-box {
+          background: #ff9800;
+        }
+      }
+
+      /* Portrait/Landscape */
+      @media (orientation: landscape) {
+        .orientation-demo {
+          display: flex;
+          gap: 20px;
+        }
+      }
+
+      @media (orientation: portrait) {
+        .orientation-demo {
+          display: block;
+        }
+      }
+
+      /* Dark mode */
+      @media (prefers-color-scheme: dark) {
+        .dark-mode-box {
+          background: #333;
+          color: white;
+        }
+      }
+
+      /* Print styles */
+      @media print {
+        .no-print {
+          display: none;
+        }
+
+        body {
+          font-size: 12pt;
+        }
+      }
+
+      /* Responsive layout */
+      @media (max-width: 768px) {
+        .flex-container {
+          flex-direction: column;
+        }
+
+        .flex-item {
+          min-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Media Query Examples</h1>
+
+      <section class="card">
+        <h2>Responsive Text & Colors</h2>
+        <p class="responsive-text">
+          This text changes size at different breakpoints:
+          <br />16px (mobile) → 18px (tablet) → 20px (desktop)
+        </p>
+        <div class="responsive-box">
+          This box changes color at breakpoints:
+          <br />Blue (mobile) → Green (tablet) → Orange (desktop)
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Orientation Demo</h2>
+        <div class="orientation-demo">
+          <div class="responsive-box">Box 1</div>
+          <div class="responsive-box">Box 2</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Dark Mode Support</h2>
+        <div class="dark-mode-box responsive-box">
+          This box adapts to system dark mode preference
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Print Styles</h2>
+        <div class="responsive-box">This will show when printing</div>
+        <div class="responsive-box no-print">This won't show when printing</div>
+      </section>
+
+      <section class="card">
+        <h2>Responsive Flex Layout</h2>
+        <div class="flex-container">
+          <div class="flex-item responsive-box">Item 1</div>
+          <div class="flex-item responsive-box">Item 2</div>
+          <div class="flex-item responsive-box">Item 3</div>
+          <div class="flex-item responsive-box">Item 4</div>
+          <div class="flex-item responsive-box">Item 5</div>
+          <div class="flex-item responsive-box">Item 6</div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

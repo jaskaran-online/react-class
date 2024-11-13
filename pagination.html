@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pagination Tutorial with Math</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f0f2f5;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .item {
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .math-explanation {
+        background-color: #f8f9fa;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 4px;
+        border-left: 4px solid #4267b2;
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .pagination button {
+        padding: 8px 12px;
+        border: none;
+        background-color: #4267b2;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .pagination button:hover {
+        background-color: #365899;
+      }
+
+      .pagination button.active {
+        background-color: #2ecc71;
+      }
+
+      .pagination button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Pagination Tutorial with Math Explanations</h1>
+
+      <div class="math-explanation">
+        <h3>How Pagination Math Works:</h3>
+        <p>Given:</p>
+        <ul>
+          <li>Total Items: 50</li>
+          <li>Items Per Page: 5</li>
+        </ul>
+        <p>Total Pages Calculation:</p>
+        <code>Math.ceil(50 / 5) = Math.ceil(10) = 10 pages</code>
+        <br /><br />
+        <p>Current Page Items Range:</p>
+        <code>startIndex = (currentPage - 1) × itemsPerPage</code><br />
+        <code>endIndex = startIndex + itemsPerPage</code>
+        <br /><br />
+        <p>Example for Page 3:</p>
+        <code>startIndex = (3 - 1) × 5 = 10</code><br />
+        <code>endIndex = 10 + 5 = 15</code>
+      </div>
+
+      <div id="content"></div>
+
+      <div class="math-explanation">
+        <h3>Current Page Stats:</h3>
+        <div id="pageStats"></div>
+      </div>
+
+      <div class="pagination">
+        <button id="prevBtn">Previous</button>
+        <div id="pageButtons"></div>
+        <button id="nextBtn">Next</button>
+      </div>
+    </div>
+
+    <script>
+      // Generate dummy data
+      const dummyData = Array.from({ length: 50 }, (_, i) => ({
+        id: i + 1,
+        title: `Item ${i + 1}`,
+        description: `This is the description for item ${i + 1}`,
+      }));
+
+      // Pagination settings
+      const itemsPerPage = 5;
+      let currentPage = 1;
+      const totalPages = Math.ceil(dummyData.length / itemsPerPage);
+
+      // Display items for current page
+      function displayItems() {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const currentItems = dummyData.slice(startIndex, endIndex);
+
+        const content = document.getElementById("content");
+        content.innerHTML = "";
+
+        currentItems.forEach((item) => {
+          const div = document.createElement("div");
+          div.className = "item";
+          div.innerHTML = `
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+          `;
+          content.appendChild(div);
+        });
+
+        // Update page stats
+        const pageStats = document.getElementById("pageStats");
+        pageStats.innerHTML = `
+          <p>Current Page: ${currentPage}</p>
+          <p>Items Range: ${startIndex + 1} - ${Math.min(
+          endIndex,
+          dummyData.length
+        )} of ${dummyData.length}</p>
+          <p>Math Breakdown:</p>
+          <code>startIndex = (${currentPage} - 1) × ${itemsPerPage} = ${startIndex}</code><br>
+          <code>endIndex = ${startIndex} + ${itemsPerPage} = ${endIndex}</code>
+        `;
+
+        updatePaginationButtons();
+      }
+
+      // Update pagination buttons
+      function updatePaginationButtons() {
+        const pageButtons = document.getElementById("pageButtons");
+        pageButtons.innerHTML = "";
+
+        for (let i = 1; i <= totalPages; i++) {
+          const button = document.createElement("button");
+          button.textContent = i;
+          button.className = i === currentPage ? "active" : "";
+          button.addEventListener("click", () => {
+            currentPage = i;
+            displayItems();
+          });
+          pageButtons.appendChild(button);
+        }
+
+        // Update prev/next buttons
+        document.getElementById("prevBtn").disabled = currentPage === 1;
+        document.getElementById("nextBtn").disabled =
+          currentPage === totalPages;
+      }
+
+      // Event listeners for prev/next buttons
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          displayItems();
+        }
+      });
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          displayItems();
+        }
+      });
+
+      // Initial display
+      displayItems();
+    </script>
+  </body>
+</html>

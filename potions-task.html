@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Positions and Z-Index Exercise</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .task-container {
+        width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+      }
+
+      .demo-container {
+        position: relative;
+        height: 400px;
+        border: 2px dashed #ccc;
+        margin: 30px 0;
+        background-color: #f5f5f5;
+      }
+
+      .box {
+        width: 100px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+
+      #box1 {
+        background-color: rgba(255, 0, 0, 0.8);
+        position: relative;
+        top: 20px;
+        left: 20px;
+        z-index: 1;
+      }
+
+      #box2 {
+        background-color: rgba(0, 128, 0, 0.8);
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        z-index: 2;
+      }
+
+      #box3 {
+        background-color: rgba(0, 0, 255, 0.8);
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 3;
+      }
+
+      #box4 {
+        background-color: rgba(128, 0, 128, 0.8);
+        position: sticky;
+        top: 10px;
+        margin-left: 200px;
+        z-index: 4;
+      }
+
+      .solution {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 30px;
+      }
+
+      .solution pre {
+        background-color: #282c34;
+        color: #abb2bf;
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="task-container">
+      <h1>CSS Positions and Z-Index Exercise</h1>
+
+      <h2>Task:</h2>
+      <p>
+        Create four boxes with different positioning properties and z-index
+        values to understand how they interact with each other.
+      </p>
+
+      <div class="demo-container">
+        <div class="box" id="box1">Relative</div>
+        <div class="box" id="box2">Absolute</div>
+        <div class="box" id="box3">Fixed</div>
+        <div class="box" id="box4">Sticky</div>
+      </div>
+
+      <div class="solution">
+        <h2>Solution Explanation:</h2>
+        <ol>
+          <li>
+            <strong>Box 1 (Red):</strong> Uses relative positioning, moved
+            slightly from its normal position
+          </li>
+          <li>
+            <strong>Box 2 (Green):</strong> Uses absolute positioning,
+            positioned relative to its closest positioned ancestor
+          </li>
+          <li>
+            <strong>Box 3 (Blue):</strong> Uses fixed positioning, stays in
+            place even when scrolling
+          </li>
+          <li>
+            <strong>Box 4 (Purple):</strong> Uses sticky positioning, behaves
+            like relative until the scroll threshold
+          </li>
+        </ol>
+
+        <h3>Key CSS Properties Used:</h3>
+        <pre>
+.box {
+    position: relative|absolute|fixed|sticky;
+    top: value;
+    left: value;
+    z-index: value;
+}
+            </pre
+        >
+
+        <h3>Important Notes:</h3>
+        <ul>
+          <li>
+            Z-index only works on positioned elements (position value other than
+            static)
+          </li>
+          <li>Fixed positioning is relative to the viewport</li>
+          <li>Sticky positioning is a hybrid of relative and fixed</li>
+          <li>Higher z-index values appear on top of lower values</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
