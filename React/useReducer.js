@@ -25,6 +25,7 @@ import React, { useReducer } from 'react';
 const ADD_TODO = 'ADD_TODO';
 const TOGGLE_TODO = 'TOGGLE_TODO';
 const DELETE_TODO = 'DELETE_TODO';
+const UPDATE_TODO = 'UPDATE_TODO';
 
 // Reducer function
 const todoReducer = (state, action) => {
@@ -43,6 +44,12 @@ const todoReducer = (state, action) => {
       );
     case DELETE_TODO:
       return state.filter(todo => todo.id !== action.payload);
+    case UPDATE_TODO:
+      return state.map(todo =>
+        todo.id === action.payload.id
+          ? { ...todo, text: action.payload.text }
+          : todo
+      );
     default:
       return state;
   }
@@ -51,13 +58,24 @@ const todoReducer = (state, action) => {
 const TodoApp = () => {
   const [todos, dispatch] = useReducer(todoReducer, []);
   const [input, setInput] = React.useState('');
+  const [editingId, setEditingId] = React.useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input.trim()) {
-      dispatch({ type: ADD_TODO, payload: input });
+      if (editingId) {
+        dispatch({ type: UPDATE_TODO, payload: { id: editingId, text: input } });
+        setEditingId(null);
+      } else {
+        dispatch({ type: ADD_TODO, payload: input });
+      }
       setInput('');
     }
+  };
+
+  const startEditing = (todo) => {
+    setEditingId(todo.id);
+    setInput(todo.text);
   };
 
   return (
@@ -71,7 +89,17 @@ const TodoApp = () => {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Add a new todo"
         />
-        <button type="submit">Add Todo</button>
+        <button type="submit">
+          {editingId ? 'Update Todo' : 'Add Todo'}
+        </button>
+        {editingId && (
+          <button type="button" onClick={() => {
+            setEditingId(null);
+            setInput('');
+          }}>
+            Cancel
+          </button>
+        )}
       </form>
 
       <ul>
@@ -86,6 +114,12 @@ const TodoApp = () => {
             >
               {todo.text}
             </span>
+            <button
+              onClick={() => startEditing(todo)}
+              style={{ marginRight: '5px' }}
+            >
+              Edit
+            </button>
             <button
               onClick={() => dispatch({ type: DELETE_TODO, payload: todo.id })}
             >

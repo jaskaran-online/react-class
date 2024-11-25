@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      a {
+        text-decoration: none;
+        color: #000;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      li {
+        flex-grow: 1;
+        text-align: center;
+        position: relative;
+        padding: 10px;
+      }
+
+      li:hover {
+        background-color: #444;
+        color: #fff;
+        transition: 0.2s ease-in-out all;
+        cursor: pointer;
+      }
+
+      li:hover a {
+        color: #fff;
+      }
+
+      li:hover > ul {
+        background-color: #444;
+        color: #fff;
+      }
+
+      nav > ul {
+        display: flex;
+        justify-content: space-between;
+        max-width: 400px;
+        margin: 30px auto;
+      }
+
+      li > .dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+      }
+
+      li:hover > .dropdown {
+        display: block;
+      }
+
+      li > .subdropdown {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        min-width: 100px;
+      }
+
+      li:hover > .subdropdown {
+        display: block;
+      }
+
+      .dropdown li:hover,
+      .subdropdown li:hover {
+        background-color: dodgerblue;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li>Home</li>
+        <li>
+          <a href="">products</a>
+          <ul class="dropdown">
+            <li>product 1</li>
+            <li>
+              <a href="">product 2</a>
+              <ul class="subdropdown">
+                <li>subproduct 1</li>
+                <li>subproduct 2</li>
+                <li>subproduct 3</li>
+              </ul>
+            </li>
+            <li>
+              <a href="">product 3</a>
+              <ul class="subdropdown">
+                <li>subproduct 1</li>
+                <li>subproduct 2</li>
+                <li>subproduct 3</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>About</li>
+        <li>Contact</li>
+      </ul>
+    </nav>
+  </body>
+</html>

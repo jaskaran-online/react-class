@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <button
+      id="fetchVideos"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    >
+      Fetch Videos
+    </button>
+
+    <div id="videos"></div>
+
+    <script>
+      let videosElement = document.getElementById("videos");
+      let fetchVideosButton = document.getElementById("fetchVideos");
+
+      fetchVideosButton.addEventListener("click", function () {
+        fetch("https://api.freeapi.app/api/v1/public/youtube/videos")
+          .then((response) => response.json())
+          .then((apiData) => {
+            //   console.log("=================");
+            //   console.log("apiData", apiData);
+            //   console.log("=================");
+
+            //   console.log("STATUS CODE: ", apiData.statusCode);
+            //   console.log("SUCCESS : ", apiData.success);
+            //   console.log("MESSAGE : ", apiData.message);
+
+            let Data = apiData.data;
+
+            //   console.log("DATA:", Data);
+
+            //   console.log("data inside Data variable", Data.data);
+
+            let recordsArray = Data.data;
+
+            let htmlContent =
+              "<ul class='flex flex-wrap justify-center gap-6'>";
+
+            recordsArray.forEach((record) => {
+              let title = record.items.snippet.title;
+              let description = record.items.snippet.description;
+              let channelTitle = record.items.snippet.channelTitle;
+              let thumbnailUrl = record.items.snippet.thumbnails.standard.url;
+              htmlContent += `<li class='bg-slate-100 p-4 max-w-sm rounded shadow hover:bg-blue-200 hover:shadow-lg hover:-translate-y-1 cursor-pointer transition-all'>
+                    <img src="${thumbnailUrl}" alt="${title}"/>
+                    <h2 class='text-2xl font-bold'>${title}</h2>
+                    <p class='text-gray-600 mt-3 font-semibold'>${channelTitle}</p>
+                </li>`;
+
+              // console.log(record.items.snippet);
+              // console.log("TITLE: ", record.items.snippet.title);
+              // console.log(
+              //   "CANNEL TITLE: ",
+              //   record.items.snippet.channelTitle
+              // );
+            });
+
+            htmlContent += "</ul>";
+
+            videosElement.innerHTML = htmlContent;
+          })
+          .catch((error) => console.error("Error:", error));
+      });
+
+      /*
+        1. handle then catch
+        2. get related data from api response
+        3. create html content
+        4. display on screen
+        5. style
+      */
+    </script>
+  </body>
+</html>

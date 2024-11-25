@@ -1,19 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add Inter font from Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOM Traversal Example</title>
-</head>
+  <body
+    class="font-sans leading-relaxed bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen"
+  >
+    <div class="max-w-7xl mx-auto p-5">
+      <!-- Header Section -->
+      <header
+        class="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-100"
+      >
+        <div class="flex justify-between items-center mb-8">
+          <div
+            class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text"
+          >
+            your name
+          </div>
+          <nav class="space-x-2">
+            <a
+              href="#"
+              class="text-gray-600 hover:text-purple-600 transition-colors hover:bg-purple-50 p-2 px-4 rounded-md"
+              >Home</a
+            >
 
-<body>
-<ul id="list">
-    <li>One</li>
-    <li>Two</li>
-    <li>Three</li>
-</ul>
-<script src="Dom-traversal.js"></script>
-</body>
+            <a
+              href="#"
+              class="text-gray-600 hover:text-purple-600 transition-colors hover:bg-purple-50 p-2 px-4 rounded-md"
+              >Projects</a
+            >
 
+            <a
+              href="#"
+              class="text-gray-600 hover:text-purple-600 transition-colors hover:bg-purple-50 p-2 px-4 rounded-md"
+              >Articles</a
+            >
+
+            <a
+              href="#"
+              class="text-gray-600 hover:text-purple-600 transition-colors hover:bg-purple-50 p-2 px-4 rounded-md"
+              >Contact</a
+            >
+          </nav>
+        </div>
+        <div>
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">
+            Frontend Developer
+          </h1>
+          <p class="text-gray-500">html only with proper layout, no styling</p>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="flex gap-8 mb-8 flex-col md:flex-row">
+        <div class="flex-1">
+          <!-- Projects Section -->
+          <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Projects</h2>
+            <div class="flex flex-col gap-3">
+              <div
+                class="bg-purple-50 border border-purple-100 p-4 rounded-lg hover:shadow-md transition-all hover:-translate-y-1 cursor-pointer"
+              >
+                HTML Only Portfolio
+              </div>
+              <div
+                class="bg-blue-50 border border-blue-100 p-4 rounded-lg hover:shadow-md transition-all hover:-translate-y-1 cursor-pointer"
+              >
+                Calculator
+              </div>
+              <div
+                class="bg-indigo-50 border border-indigo-100 p-4 rounded-lg hover:shadow-md transition-all hover:-translate-y-1 cursor-pointer"
+              >
+                Quiz App
+              </div>
+              <div
+                class="bg-violet-50 border border-violet-100 p-4 rounded-lg hover:shadow-md transition-all hover:-translate-y-1 cursor-pointer"
+              >
+                Countdown Timer
+              </div>
+              <div
+                class="bg-pink-50 border border-pink-100 p-4 rounded-lg hover:shadow-md transition-all hover:-translate-y-1 cursor-pointer"
+              >
+                Product Upcoming Page
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="flex-1">
+          <!-- Work Experience Section -->
+          <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">
+              Work Experience
+            </h2>
+            <div class="space-y-4">
+              <div
+                class="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-lg border border-purple-100"
+              >
+                <h3 class="font-bold text-lg text-purple-700">roadmap.sh</h3>
+                <p class="my-3 text-gray-600">
+                  Solved all the frontend projects
+                </p>
+                <a
+                  href="#"
+                  class="text-purple-600 hover:text-purple-700 font-medium hover:underline inline-flex items-center"
+                >
+                  Visit my Profile →
+                </a>
+              </div>
+              <div
+                class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg border border-blue-100"
+              >
+                <h3 class="font-bold text-lg text-blue-700">OpenSource Work</h3>
+                <p class="my-3 text-gray-600">
+                  Contributed to 50 opensource projects. Made my own projects
+                  with 200 GitHub Stars.
+                </p>
+                <a
+                  href="#"
+                  class="text-blue-600 hover:text-blue-700 font-medium hover:underline inline-flex items-center"
+                >
+                  Visit my GitHub Profile →
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="flex-1">
+          <!-- Education Section -->
+          <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Education</h2>
+            <p class="mb-4 text-gray-600">
+              Graduated with
+              <span class="text-purple-600 font-semibold">3.76</span> out of 4
+              CGPA. Won Acme Hackathon. Organized 30 sessions.
+            </p>
+            <h3 class="font-bold text-lg mb-3 text-gray-700">
+              Courses I took:
+            </h3>
+            <ul class="space-y-2">
+              <li class="flex items-center text-gray-600">
+                <span class="w-2 h-2 bg-purple-400 rounded-full mr-2"></span>
+                Object Oriented Programming
+              </li>
+              <li class="flex items-center text-gray-600">
+                <span class="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
+                Data Structures and Algorithms
+              </li>
+              <li class="flex items-center text-gray-600">
+                <span class="w-2 h-2 bg-indigo-400 rounded-full mr-2"></span>
+                Web Engineering
+              </li>
+              <li class="flex items-center text-gray-600">
+                <span class="w-2 h-2 bg-violet-400 rounded-full mr-2"></span>
+                Artificial Intelligence
+              </li>
+              <li class="flex items-center text-gray-600">
+                <span class="w-2 h-2 bg-purple-400 rounded-full mr-2"></span>
+                Human Computer Interaction
+              </li>
+              <li class="flex items-center text-gray-600">
+                <span class="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
+                Computer Graphics
+              </li>
+              <li class="flex items-center text-gray-600">
+                <span class="w-2 h-2 bg-indigo-400 rounded-full mr-2"></span>
+                Database Management Systems
+              </li>
+              <li class="flex items-center text-gray-600">
+                <span class="w-2 h-2 bg-violet-400 rounded-full mr-2"></span>
+                Distributed Database Systems
+              </li>
+              <li class="flex items-center text-gray-600">
+                <span class="w-2 h-2 bg-purple-400 rounded-full mr-2"></span>
+                Discreet Mathematics
+              </li>
+            </ul>
+          </section>
+        </div>
+      </main>
+
+      <!-- Reviews Section -->
+      <section class="mt-8">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">
+          Reviews From my Teachers
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+          >
+            <div class="mb-4">
+              <svg
+                class="h-8 w-8 text-purple-400"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"
+                />
+              </svg>
+            </div>
+            <p class="text-gray-600 mb-4">
+              "John doe was a brilliant student; always stood out with his
+              assignments."
+            </p>
+            <span class="block text-purple-600 font-medium">Jane Doe</span>
+            <span class="block text-gray-500">Assistant Professor</span>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+          >
+            <div class="mb-4">
+              <svg
+                class="h-8 w-8 text-blue-400"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"
+                />
+              </svg>
+            </div>
+            <p class="text-gray-600 mb-4">
+              "John doe was a brilliant student; always stood out with his
+              assignments."
+            </p>
+            <span class="block text-blue-600 font-medium">Jane Doe</span>
+            <span class="block text-gray-500">Assistant Professor</span>
+          </div>
+          <div
+            class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+          >
+            <div class="mb-4">
+              <svg
+                class="h-8 w-8 text-indigo-400"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"
+                />
+              </svg>
+            </div>
+            <p class="text-gray-600 mb-4">
+              "John doe was a brilliant student; always stood out with his
+              assignments."
+            </p>
+            <span class="block text-indigo-600 font-medium">Jane Doe</span>
+            <span class="block text-gray-500">Assistant Professor</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="text-center mt-12 text-gray-500">
+        <p>© all rights reserved 2025</p>
+      </footer>
+    </div>
+  </body>
 </html>
