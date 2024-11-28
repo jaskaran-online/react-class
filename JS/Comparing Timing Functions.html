@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timing Function Comparison</title>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 50px;
+      }
+
+      .box {
+        width: 50px;
+        height: 50px;
+        background-color: lightblue;
+        position: relative;
+      }
+
+      .linear {
+        animation: move 3s linear infinite;
+      }
+
+      .ease {
+        animation: move 3s ease infinite;
+      }
+
+      .ease-in {
+        animation: move 3s ease-in infinite;
+      }
+
+      .ease-out {
+        animation: move 3s ease-out infinite;
+      }
+
+      .ease-in-out {
+        animation: move 3s ease-in-out infinite;
+      }
+
+      @keyframes move {
+        from {
+          /* transform: translateX(0); */
+          width: 100px;
+        }
+        to {
+          width: 500px;
+          /* transform: translateX(300px); */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box linear">linear</div>
+      <div class="box ease">ease</div>
+      <div class="box ease-in">ease-in</div>
+      <div class="box ease-out">ease-out</div>
+      <div class="box ease-in-out">ease-in-out</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Animation Practice Tasks</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f0f0f0;
+      }
+
+      .task-section {
+        margin: 30px 0;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .task-title {
+        color: #333;
+        margin-bottom: 15px;
+      }
+
+      .playground {
+        min-height: 200px;
+        border: 2px dashed #ccc;
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Task 1: Basic Hover Effect */
+      .hover-box {
+        width: 100px;
+        height: 100px;
+        background-color: #3498db;
+        transition: all 0.3s ease;
+      }
+
+      .hover-box:hover {
+        background-color: #e74c3c;
+        transform: scale(1.2);
+      }
+
+      /* Task 2: Multiple Transforms */
+      .transform-box {
+        width: 100px;
+        height: 100px;
+        background-color: #2ecc71;
+        transition: all 0.5s ease;
+      }
+
+      .transform-box:hover {
+        transform: rotate(45deg) scale(1.2) translateX(50px);
+        background-color: #f1c40f;
+      }
+
+      /* Task 3: Keyframe Animation */
+      .bounce-ball {
+        width: 50px;
+        height: 50px;
+        background-color: #9b59b6;
+        border-radius: 50%;
+        animation: bounce 1s infinite alternate ease-in-out;
+      }
+
+      @keyframes bounce {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(100px);
+        }
+      }
+
+      /* Task 4: Loading Animation */
+      .loading-dots {
+        display: flex;
+        gap: 10px;
+      }
+
+      .dot {
+        width: 20px;
+        height: 20px;
+        background-color: #e67e22;
+        border-radius: 50%;
+        animation: loading 0.8s infinite ease-in-out alternate;
+      }
+
+      .dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes loading {
+        to {
+          transform: translateY(-20px);
+        }
+      }
+
+      /* Practice Area - Try your own animations here! */
+      .practice-box {
+        width: 100px;
+        height: 100px;
+        background-color: #95a5a6;
+        /* Add your animations here! */
+      }
+
+      .instructions {
+        background: #f8f9fa;
+        padding: 15px;
+        border-left: 4px solid #3498db;
+        margin: 10px 0;
+      }
+
+      .code-example {
+        background: #2d2d2d;
+        color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 10px 0;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Animation Practice Tasks</h1>
+
+    <!-- Task 1: Basic Hover Effect -->
+    <section class="task-section">
+      <h2 class="task-title">Task 1: Hover Effect</h2>
+      <div class="instructions">
+        <p>Learn how to create a basic hover effect using transitions:</p>
+        <ul>
+          <li>Change background color on hover</li>
+          <li>Scale the element up on hover</li>
+          <li>Use transition for smooth animation</li>
+        </ul>
+      </div>
+      <div class="playground">
+        <div class="hover-box"></div>
+      </div>
+    </section>
+
+    <!-- Task 2: Multiple Transforms -->
+    <section class="task-section">
+      <h2 class="task-title">Task 2: Multiple Transforms</h2>
+      <div class="instructions">
+        <p>Practice combining multiple transforms:</p>
+        <ul>
+          <li>Rotate the element</li>
+          <li>Scale it up</li>
+          <li>Move it horizontally</li>
+        </ul>
+      </div>
+      <div class="playground">
+        <div class="transform-box"></div>
+      </div>
+    </section>
+
+    <!-- Task 3: Keyframe Animation -->
+    <section class="task-section">
+      <h2 class="task-title">Task 3: Bouncing Ball</h2>
+      <div class="instructions">
+        <p>Create a bouncing animation using @keyframes:</p>
+        <ul>
+          <li>Use translateY to move the ball</li>
+          <li>Make it bounce infinitely</li>
+          <li>Add easing for natural movement</li>
+        </ul>
+      </div>
+      <div class="playground">
+        <div class="bounce-ball"></div>
+      </div>
+    </section>
+
+    <!-- Task 4: Loading Animation -->
+    <section class="task-section">
+      <h2 class="task-title">Task 4: Loading Animation</h2>
+      <div class="instructions">
+        <p>Create a loading animation with multiple elements:</p>
+        <ul>
+          <li>Animate multiple dots</li>
+          <li>Use animation delays</li>
+          <li>Create a sequence effect</li>
+        </ul>
+      </div>
+      <div class="playground">
+        <div class="loading-dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Practice Area -->
+    <section class="task-section">
+      <h2 class="task-title">Your Practice Area</h2>
+      <div class="instructions">
+        <p>Try creating your own animations! Here are some ideas:</p>
+        <ul>
+          <li>Create a pulsing effect</li>
+          <li>Make an element shake</li>
+          <li>Create a spinning loader</li>
+          <li>Experiment with different timing functions</li>
+        </ul>
+      </div>
+      <div class="playground">
+        <div class="practice-box"></div>
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cat Information Speaker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-2xl mx-auto">
+      <div class="bg-white rounded-lg shadow-lg p-6 space-y-6">
+        <h1 class="text-3xl font-bold text-center text-gray-800">
+          Cat Information Speaker
+        </h1>
+
+        <div class="flex justify-center">
+          <button
+            id="loadCat"
+            class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors"
+          >
+            Load Random Cat
+          </button>
+        </div>
+
+        <div id="catInfo" class="space-y-4 hidden">
+          <div class="flex justify-center">
+            <div
+              id="imageSkeleton"
+              class="hidden w-64 h-64 bg-gray-200 animate-pulse rounded-lg"
+            ></div>
+            <img
+              id="catImage"
+              class="rounded-lg max-h-64 object-cover"
+              src=""
+              alt="Cat Image"
+            />
+          </div>
+
+          <div class="space-y-2">
+            <div
+              id="nameSkeleton"
+              class="hidden h-8 bg-gray-200 animate-pulse rounded w-48 mx-auto"
+            ></div>
+            <h2 id="catName" class="text-2xl font-semibold text-center"></h2>
+
+            <div id="descriptionSkeleton" class="hidden space-y-2">
+              <div class="h-4 bg-gray-200 animate-pulse rounded"></div>
+              <div class="h-4 bg-gray-200 animate-pulse rounded w-11/12"></div>
+              <div class="h-4 bg-gray-200 animate-pulse rounded w-4/5"></div>
+            </div>
+            <p id="catDescription" class="text-gray-700"></p>
+          </div>
+
+          <div class="flex justify-center gap-4">
+            <button
+              id="speakButton"
+              class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg transition-colors"
+            >
+              Speak Description
+            </button>
+            <button
+              id="stopButton"
+              class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg transition-colors"
+            >
+              Stop Speaking
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const loadCatBtn = document.getElementById("loadCat");
+      const catInfo = document.getElementById("catInfo");
+      const catImage = document.getElementById("catImage");
+      const catName = document.getElementById("catName");
+      const catDescription = document.getElementById("catDescription");
+      const speakButton = document.getElementById("speakButton");
+      const stopButton = document.getElementById("stopButton");
+
+      const imageSkeleton = document.getElementById("imageSkeleton");
+      const nameSkeleton = document.getElementById("nameSkeleton");
+      const descriptionSkeleton = document.getElementById(
+        "descriptionSkeleton"
+      );
+
+      async function fetchRandomCat() {
+        try {
+          const response = await fetch(
+            "https://api.freeapi.app/api/v1/public/cats/cat/random"
+          );
+          const data = await response.json();
+
+          if (data.success && data.data) {
+            return {
+              name: data.data.name,
+              description: data.data.description,
+              image: data.data.image,
+            };
+          }
+          throw new Error("Failed to fetch cat data");
+        } catch (error) {
+          console.error("Error fetching cat:", error);
+          return null;
+        }
+      }
+
+      function showSkeletons() {
+        catInfo.classList.remove("hidden");
+        catImage.classList.add("hidden");
+        catName.classList.add("hidden");
+        catDescription.classList.add("hidden");
+
+        imageSkeleton.classList.remove("hidden");
+        nameSkeleton.classList.remove("hidden");
+        descriptionSkeleton.classList.remove("hidden");
+      }
+
+      function hideSkeletons() {
+        imageSkeleton.classList.add("hidden");
+        nameSkeleton.classList.add("hidden");
+        descriptionSkeleton.classList.add("hidden");
+
+        catImage.classList.remove("hidden");
+        catName.classList.remove("hidden");
+        catDescription.classList.remove("hidden");
+      }
+
+      loadCatBtn.addEventListener("click", async () => {
+        showSkeletons();
+        const cat = await fetchRandomCat();
+        if (cat) {
+          catImage.src = cat.image;
+          catName.textContent = cat.name;
+          catDescription.textContent = cat.description;
+
+          catImage.onload = () => {
+            hideSkeletons();
+          };
+        } else {
+          catInfo.classList.add("hidden");
+        }
+      });
+
+      let speechSynthesis = window.speechSynthesis;
+      let currentUtterance = null;
+
+      speakButton.addEventListener("click", () => {
+        if (currentUtterance) {
+          speechSynthesis.cancel();
+        }
+
+        const description = catDescription.textContent;
+        currentUtterance = new SpeechSynthesisUtterance(description);
+        speechSynthesis.speak(currentUtterance);
+      });
+
+      stopButton.addEventListener("click", () => {
+        if (currentUtterance) {
+          speechSynthesis.cancel();
+          currentUtterance = null;
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Animations Examples</title>
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        gap: 2rem;
+      }
+
+      /* Rotating Square */
+      .rotate-box {
+        width: 100px;
+        height: 100px;
+        background-color: #ff6b6b;
+        animation: rotate 3s infinite linear;
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Pulsing Circle */
+      .pulse-circle {
+        width: 100px;
+        height: 100px;
+        background-color: #4ecdc4;
+        border-radius: 50%;
+        animation: pulse 1.5s infinite ease-in-out;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Moving Box */
+      .move-box {
+        width: 100px;
+        height: 100px;
+        background-color: #45b7d1;
+        animation: move 2s infinite alternate ease-in-out;
+      }
+
+      @keyframes move {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(50px);
+        }
+      }
+
+      /* Color Changing Box */
+      .color-box {
+        width: 100px;
+        height: 100px;
+        animation: colorChange 4s infinite;
+      }
+
+      @keyframes colorChange {
+        0% {
+          background-color: #ff6b6b;
+        }
+        25% {
+          background-color: #4ecdc4;
+        }
+        50% {
+          background-color: #45b7d1;
+        }
+        75% {
+          background-color: #96ceb4;
+        }
+        100% {
+          background-color: #ff6b6b;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="rotate-box"></div>
+      <div class="pulse-circle"></div>
+      <div class="move-box"></div>
+      <div class="color-box"></div>
+    </div>
+  </body>
+</html>

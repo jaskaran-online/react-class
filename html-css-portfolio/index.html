@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>John Doe - Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Custom CSS */
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+
+      /* Animations */
+      .fade-in {
+        animation: fadeIn 1s ease-in;
+      }
+
+      .slide-up {
+        animation: slideUp 0.8s ease-out;
+      }
+
+      .bounce-in {
+        animation: bounceIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes bounceIn {
+        0% {
+          transform: scale(0.3);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        70% {
+          transform: scale(0.9);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* Skill bar animation */
+      .skill-bar {
+        width: 0;
+        animation: fillBar 1.5s ease-out forwards;
+      }
+
+      @keyframes fillBar {
+        from {
+          width: 0;
+        }
+        to {
+          width: var(--percent);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <!-- Header/Navigation -->
+    <nav class="bg-white shadow-lg">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+          <div class="text-2xl font-bold text-blue-600">JD</div>
+          <div class="hidden md:flex space-x-8">
+            <a href="#home" class="text-gray-700 hover:text-blue-600 transition"
+              >Home</a
+            >
+            <a
+              href="#about"
+              class="text-gray-700 hover:text-blue-600 transition"
+              >About</a
+            >
+            <a
+              href="#skills"
+              class="text-gray-700 hover:text-blue-600 transition"
+              >Skills</a
+            >
+            <a
+              href="#projects"
+              class="text-gray-700 hover:text-blue-600 transition"
+              >Projects</a
+            >
+            <a
+              href="#contact"
+              class="text-gray-700 hover:text-blue-600 transition"
+              >Contact</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      id="home"
+      class="min-h-screen flex items-center bg-gradient-to-r from-blue-500 to-blue-700"
+    >
+      <div class="max-w-6xl mx-auto px-4 text-white">
+        <div class="fade-in">
+          <h1 class="text-5xl md:text-7xl font-bold mb-4">Hi, I'm John Doe</h1>
+          <p class="text-xl md:text-2xl mb-8">
+            Full Stack Developer & UI/UX Designer
+          </p>
+          <a
+            href="#contact"
+            class="bg-white text-blue-600 px-8 py-3 rounded-full font-medium hover:bg-blue-50 transition"
+          >
+            Get in Touch
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">About Me</h2>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div class="slide-up">
+            <span class="text-[250px]">👨🏻‍💻</span>
+          </div>
+          <div class="slide-up">
+            <p class="text-gray-600 mb-6">
+              I'm a passionate developer with 5 years of experience in creating
+              beautiful and functional web applications. I specialize in modern
+              JavaScript frameworks and have a keen eye for design.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-2xl text-gray-600 hover:text-blue-600 transition"
+              >
+                <i class="fab fa-github"></i>
+              </a>
+              <a
+                href="#"
+                class="text-2xl text-gray-600 hover:text-blue-600 transition"
+              >
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a
+                href="#"
+                class="text-2xl text-gray-600 hover:text-blue-600 transition"
+              >
+                <i class="fab fa-twitter"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Skills</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bounce-in">
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span class="text-gray-700">HTML/CSS</span>
+                <span class="text-gray-700">90%</span>
+              </div>
+              <div class="h-3 bg-gray-200 rounded-full">
+                <div
+                  class="skill-bar h-full bg-blue-600 rounded-full"
+                  style="--percent: 90%"
+                ></div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span class="text-gray-700">JavaScript</span>
+                <span class="text-gray-700">85%</span>
+              </div>
+              <div class="h-3 bg-gray-200 rounded-full">
+                <div
+                  class="skill-bar h-full bg-blue-600 rounded-full"
+                  style="--percent: 85%"
+                ></div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <div class="flex justify-between mb-2">
+                <span class="text-gray-700">React</span>
+                <span class="text-gray-700">80%</span>
+              </div>
+              <div class="h-3 bg-gray-200 rounded-full">
+                <div
+                  class="skill-bar h-full bg-blue-600 rounded-full"
+                  style="--percent: 80%"
+                ></div>
+              </div>
+            </div>
+          </div>
+          <div class="bounce-in">
+            <div class="grid grid-cols-3 gap-4">
+              <div class="text-center p-4 bg-white rounded-lg shadow-md">
+                <i class="fab fa-react text-4xl text-blue-600 mb-2"></i>
+                <p>React</p>
+              </div>
+              <div class="text-center p-4 bg-white rounded-lg shadow-md">
+                <i class="fab fa-node-js text-4xl text-green-600 mb-2"></i>
+                <p>Node.js</p>
+              </div>
+              <div class="text-center p-4 bg-white rounded-lg shadow-md">
+                <i class="fab fa-python text-4xl text-yellow-600 mb-2"></i>
+                <p>Python</p>
+              </div>
+              <div class="text-center p-4 bg-white rounded-lg shadow-md">
+                <i class="fab fa-aws text-4xl text-orange-600 mb-2"></i>
+                <p>AWS</p>
+              </div>
+              <div class="text-center p-4 bg-white rounded-lg shadow-md">
+                <i class="fab fa-docker text-4xl text-blue-600 mb-2"></i>
+                <p>Docker</p>
+              </div>
+              <div class="text-center p-4 bg-white rounded-lg shadow-md">
+                <i class="fab fa-git-alt text-4xl text-red-600 mb-2"></i>
+                <p>Git</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-white">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Recent Projects</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden slide-up">
+            <img
+              src="https://via.placeholder.com/400x300"
+              alt="Project 1"
+              class="w-full"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">E-commerce Platform</h3>
+              <p class="text-gray-600 mb-4">
+                A full-stack e-commerce solution built with React and Node.js
+              </p>
+              <div class="flex space-x-2">
+                <span
+                  class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
+                  >React</span
+                >
+                <span
+                  class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm"
+                  >Node.js</span
+                >
+              </div>
+            </div>
+          </div>
+          <!-- Add more project cards here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">Get in Touch</h2>
+        <div class="max-w-lg mx-auto">
+          <form class="space-y-6 bounce-in">
+            <div>
+              <label class="block text-gray-700 mb-2">Name</label>
+              <input
+                type="text"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label class="block text-gray-700 mb-2">Email</label>
+              <input
+                type="email"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label class="block text-gray-700 mb-2">Message</label>
+              <textarea
+                rows="4"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              ></textarea>
+            </div>
+            <button
+              class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+      <div class="max-w-6xl mx-auto px-4 text-center">
+        <div class="flex justify-center space-x-6 mb-4">
+          <a href="#" class="hover:text-blue-400 transition"
+            ><i class="fab fa-github"></i
+          ></a>
+          <a href="#" class="hover:text-blue-400 transition"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+          <a href="#" class="hover:text-blue-400 transition"
+            ><i class="fab fa-twitter"></i
+          ></a>
+        </div>
+        <p>&copy; 2024 John Doe. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

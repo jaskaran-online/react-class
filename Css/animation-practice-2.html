@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Animation Examples</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #1a1a1a;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4rem;
+        padding: 2rem;
+      }
+
+      section {
+        text-align: center;
+      }
+
+      h2 {
+        color: #fff;
+        margin-bottom: 2rem;
+        font-size: 1.5rem;
+      }
+
+      /* Loader 1: Circular Spinner */
+      .circular-loader {
+        width: 60px;
+        height: 60px;
+        border: 5px solid #1a1a1a;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Loader 2: Dots */
+      .dots-loader {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+
+      .dots-loader span {
+        width: 12px;
+        height: 12px;
+        background-color: #e74c3c;
+        border-radius: 50%;
+        animation: dots 1.4s ease-in-out infinite;
+      }
+
+      .dots-loader span:nth-child(2) {
+        animation-delay: 0.2s;
+        background-color: #f1c40f;
+      }
+      .dots-loader span:nth-child(3) {
+        animation-delay: 0.4s;
+        background-color: #2ecc71;
+      }
+
+      @keyframes dots {
+        0%,
+        100% {
+          transform: scale(0.2);
+        }
+        50% {
+          transform: scale(1);
+        }
+      }
+
+      /* Loader 3: Pulse Ring */
+      .pulse-ring {
+        position: relative;
+        width: 60px;
+        height: 60px;
+        margin: 0 auto;
+      }
+
+      .pulse-ring::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: #9b59b6;
+        animation: pulse 2s ease-out infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(0.1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(2);
+          opacity: 0;
+        }
+      }
+
+      /* Text Typing Animation */
+      .typing-container {
+        background: #2c3e50;
+        padding: 2rem;
+        border-radius: 8px;
+      }
+
+      .typing-text {
+        color: #fff;
+        border-right: 3px solid #fff;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: 2rem;
+        width: 0;
+        animation: typing 3s steps(25) forwards,
+          blink 0.8s step-end infinite alternate;
+      }
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes blink {
+        50% {
+          border-color: transparent;
+        }
+      }
+
+      /* Glowing Text */
+      .glow-text {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #fff;
+        text-shadow: 0 0 10px #00b3ff, 0 0 20px #00b3ff, 0 0 40px #00b3ff,
+          0 0 80px #00b3ff;
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 10px #00b3ff, 0 0 20px #00b3ff, 0 0 40px #00b3ff;
+        }
+        to {
+          text-shadow: 0 0 20px #00b3ff, 0 0 40px #00b3ff, 0 0 60px #00b3ff,
+            0 0 80px #00b3ff, 0 0 100px #00b3ff;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loader Animations -->
+    <section>
+      <h2>Loading Animations</h2>
+      <div class="circular-loader"></div>
+    </section>
+
+    <section>
+      <h2>Colorful Dots</h2>
+      <div class="dots-loader">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </section>
+
+    <section>
+      <h2>Pulse Ring</h2>
+      <div class="pulse-ring"></div>
+    </section>
+
+    <!-- Text Typing Effect -->
+    <section>
+      <h2>Typing Animation</h2>
+      <div class="typing-container">
+        <div class="typing-text">Welcome to Animations...</div>
+      </div>
+    </section>
+
+    <!-- Glowing Text -->
+    <section>
+      <h2>Glowing Text</h2>
+      <div class="glow-text">GLOW</div>
+    </section>
+  </body>
+</html>
