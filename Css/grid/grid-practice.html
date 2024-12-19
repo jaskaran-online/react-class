@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: grid;
+        grid-row: auto auto auto auto;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-areas:
+          "header header header"
+          "sidebar content1 content2"
+          "sidebar content3 content3"
+          "footer footer footer";
+        gap: 20px;
+        padding: 20px;
+        background-color: #f0f0f0;
+        height: 90vh;
+      }
+
+      .header {
+        grid-area: header;
+        background-color: lightpink;
+      }
+
+      .sidebar {
+        grid-area: sidebar;
+        background-color: lightblue;
+      }
+
+      .content-1 {
+        grid-area: content1;
+        background-color: lightgreen;
+      }
+
+      .content-2 {
+        grid-area: content2;
+        background-color: lightyellow;
+      }
+
+      .content-3 {
+        grid-area: content3;
+        background-color: lightcoral;
+      }
+
+      .footer {
+        grid-area: footer;
+        background-color: lightgray;
+      }
+      .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      @media screen and (max-width: 768px) {
+        .container {
+          grid-template-areas:
+            "header header header"
+            "sidebar sidebar sidebar"
+            "content1 content1 content1"
+            "content2 content2 content2"
+            "content3 content3 content3"
+            "footer footer footer";
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content header">Header</div>
+      <div class="content sidebar">Sidebar</div>
+      <div class="content content-1">Content1</div>
+      <div class="content content-2">Content2</div>
+      <div class="content content-3">Content3</div>
+      <div class="content footer">Footer</div>
+    </div>
+  </body>
+</html>
