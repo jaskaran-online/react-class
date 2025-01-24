@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'apple-gray': '#f5f5f7',
+                        'apple-blue': '#0066cc',
+                        'apple-green': '#28cd41',
+                        'apple-red': '#ff3b30'
+                    },
+                    fontFamily: {
+                        'sf-pro': ['SF Pro Display', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'SF Pro Display', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .timer-button {
+            transition: all 0.2s ease;
+        }
+
+        .timer-button:active {
+            transform: scale(0.96);
+        }
+    </style>
+</head>
+
+<body class="bg-apple-gray min-h-screen flex items-center justify-center font-sf-pro">
+    <div class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-lg p-10 w-[420px]">
+        <h1 class="text-3xl font-semibold text-center mb-8 text-gray-900">Pomodoro Timer</h1>
+
+        <!-- Timer Mode Buttons -->
+        <div class="flex justify-center space-x-4 mb-10">
+            <button data-mode="pomodoro"
+                class="mode-btn timer-button px-8 py-3 rounded-full bg-apple-blue text-white font-medium text-sm tracking-wide">
+                Focus
+            </button>
+            <button data-mode="shortBreak"
+                class="mode-btn timer-button px-8 py-3 rounded-full bg-gray-200 text-gray-700 font-medium text-sm tracking-wide">
+                Break
+            </button>
+        </div>
+
+        <!-- Timer Display -->
+        <div class="text-center mb-12">
+            <div id="time-display" class="text-8xl font-medium mb-4 text-gray-900">30:00</div>
+        </div>
+
+        <!-- Time Controls -->
+        <div class="grid grid-cols-2 gap-10 mb-10">
+            <div class="text-center">
+                <div class="text-gray-500 mb-3 text-sm">Focus Time</div>
+                <div class="flex items-center justify-center space-x-6">
+                    <button id="focus-decrease"
+                        class="timer-button w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 text-gray-700">−</button>
+                    <span id="focus-time" class="text-2xl font-medium text-gray-900">30m</span>
+                    <button id="focus-increase"
+                        class="timer-button w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 text-gray-700">+</button>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="text-gray-500 mb-3 text-sm">Break Time</div>
+                <div class="flex items-center justify-center space-x-6">
+                    <button id="break-decrease"
+                        class="timer-button w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 text-gray-700">−</button>
+                    <span id="break-time" class="text-2xl font-medium text-gray-900">5m</span>
+                    <button id="break-increase"
+                        class="timer-button w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 text-gray-700">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="flex justify-center space-x-4">
+            <button id="start-stop-btn"
+                class="timer-button px-12 py-3 bg-apple-blue text-white rounded-full font-medium text-sm tracking-wide hover:bg-blue-600">
+                Start
+            </button>
+            <button id="reset-btn"
+                class="timer-button px-12 py-3 bg-gray-200 text-gray-700 rounded-full font-medium text-sm tracking-wide hover:bg-gray-300">
+                Reset
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Timer state
+        const timerState = {
+            times: {
+                pomodoro: 30 * 60,
+                shortBreak: 5 * 60
+            },
+            mode: 'pomodoro',
+            timeLeft: 30 * 60,
+            interval: null,
+            isRunning: false
+        };
+
+        // Timer functions
+        const adjustTime = (mode, change) => {
+            const currentMinutes = Math.floor(timerState.times[mode] / 60);
+            const newMinutes = Math.max(1, Math.min(60, currentMinutes + change));
+            timerState.times[mode] = newMinutes * 60;
+
+            if (mode === timerState.mode) {
+                timerState.timeLeft = timerState.times[mode];
+                updateDisplay();
+            }
+
+            updateTimeDisplays();
+        };
+
+        const updateTimeDisplays = () => {
+            document.getElementById('focus-time').textContent = `${Math.floor(timerState.times.pomodoro / 60)}m`;
+            document.getElementById('break-time').textContent = `${Math.floor(timerState.times.shortBreak / 60)}m`;
+        };
+
+        const setMode = (mode) => {
+            timerState.mode = mode;
+            timerState.timeLeft = timerState.times[mode];
+            updateDisplay();
+            stop();
+
+            // Update button styles
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                if (btn.dataset.mode === mode) {
+                    btn.classList.replace('bg-gray-200', 'bg-apple-blue');
+                    btn.classList.replace('text-gray-700', 'text-white');
+                } else {
+                    btn.classList.replace('bg-apple-blue', 'bg-gray-200');
+                    btn.classList.replace('text-white', 'text-gray-700');
+                }
+            });
+        };
+
+        const start = () => {
+            if (!timerState.isRunning) {
+                timerState.isRunning = true;
+                document.getElementById('start-stop-btn').textContent = 'Stop';
+
+                timerState.interval = setInterval(() => {
+                    timerState.timeLeft--;
+                    updateDisplay();
+
+                    if (timerState.timeLeft <= 0) {
+                        handleTimerEnd();
+                    }
+                }, 1000);
+            }
+        };
+
+        const stop = () => {
+            timerState.isRunning = false;
+            clearInterval(timerState.interval);
+            document.getElementById('start-stop-btn').textContent = 'Start';
+        };
+
+        const updateDisplay = () => {
+            const minutes = Math.floor(timerState.timeLeft / 60).toString().padStart(2, '0');
+            const seconds = (timerState.timeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('time-display').textContent = `${minutes}:${seconds}`;
+            document.title = `${minutes}:${seconds} - Pomodoro Timer`;
+        };
+
+        const handleTimerEnd = () => {
+            stop();
+            new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg').play();
+            setMode(timerState.mode === 'pomodoro' ? 'shortBreak' : 'pomodoro');
+            start();
+        };
+
+        const reset = () => {
+            stop();
+            timerState.timeLeft = timerState.times[timerState.mode];
+            updateDisplay();
+        };
+
+        // Initialize timer
+        const initTimer = () => {
+            // Mode buttons
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.addEventListener('click', () => setMode(btn.dataset.mode));
+            });
+
+            // Time adjustment buttons
+            document.getElementById('focus-increase').addEventListener('click', () => adjustTime('pomodoro', 1));
+            document.getElementById('focus-decrease').addEventListener('click', () => adjustTime('pomodoro', -1));
+            document.getElementById('break-increase').addEventListener('click', () => adjustTime('shortBreak', 1));
+            document.getElementById('break-decrease').addEventListener('click', () => adjustTime('shortBreak', -1));
+
+            // Control buttons
+            document.getElementById('start-stop-btn').addEventListener('click', () => {
+                timerState.isRunning ? stop() : start();
+            });
+            document.getElementById('reset-btn').addEventListener('click', reset);
+
+            updateTimeDisplays();
+        };
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initTimer);
+    </script>
+</body>
+
+</html>

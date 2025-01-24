@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Onboarding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        .onboarding-screen {
+            display: none;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .onboarding-screen.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #E2E8F0;
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background-color: #3B82F6;
+            transform: scale(1.2);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+
+<body class="font-sans leading-relaxed bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+    <div class="max-w-7xl mx-auto p-5">
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-100">
+            <div class="flex justify-between items-center mb-8">
+                <div
+                    class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-500 text-transparent bg-clip-text">
+                    Onboarding
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="skipBtn"
+                        class="bg-gray-100 px-4 py-2 rounded-md text-gray-500 hover:text-gray-700 text-sm font-medium focus:outline-none"
+                        type="button">
+                        Skip Tutorial
+                    </button>
+                    <div class="flex space-x-2" id="progress-dots">
+                        <!-- Progress dots will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="screens-container">
+                <!-- Screens will be dynamically inserted here -->
+            </div>
+
+            <div class="flex justify-between items-center mt-8">
+                <button id="prevBtn"
+                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden"
+                    type="button">
+                    Previous
+                </button>
+                <button id="nextBtn"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="button">
+                    Next
+                </button>
+                <button id="finishBtn"
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hidden"
+                    type="button">
+                    Finish
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Screen content data
+        const screens = [
+            {
+                id: 1,
+                title: "Welcome to Our Platform",
+                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            },
+            {
+                id: 2,
+                title: "Discover Features",
+                content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            },
+            {
+                id: 3,
+                title: "Get Started",
+                content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+            },
+            {
+                id: 4,
+                title: "Ready to Go!",
+                content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            }
+        ];
+
+        // Global state
+        let currentScreen = parseInt(localStorage.getItem('currentScreen')) || 1;
+        const totalScreens = screens.length;
+
+        // DOM Elements
+        let screenElements;
+        let progressDots;
+        let nextBtn;
+        let prevBtn;
+        let finishBtn;
+        let skipBtn;
+
+        // Initialize the onboarding process
+        function initOnboarding() {
+            renderScreens();
+            renderProgressDots();
+            initializeElements();
+            attachEventListeners();
+            updateUI();
+        }
+
+        // Render screen content
+        function renderScreens() {
+            const container = document.getElementById('screens-container');
+
+            screens.forEach(screen => {
+                const screenElement = document.createElement('div');
+                screenElement.className = 'onboarding-screen';
+                screenElement.dataset.screen = screen.id;
+                screenElement.innerHTML = `
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">${screen.title}</h2>
+                    <p class="text-gray-600 mb-4">${screen.content}</p>
+                `;
+                container.appendChild(screenElement);
+            });
+        }
+
+        // Render progress dots
+        function renderProgressDots() {
+            const dotsContainer = document.getElementById('progress-dots');
+            for (let i = 0; i < totalScreens; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'progress-dot';
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        // Initialize DOM elements
+        function initializeElements() {
+            screenElements = document.querySelectorAll('.onboarding-screen');
+            progressDots = document.querySelectorAll('.progress-dot');
+            nextBtn = document.getElementById('nextBtn');
+            prevBtn = document.getElementById('prevBtn');
+            finishBtn = document.getElementById('finishBtn');
+            skipBtn = document.getElementById('skipBtn');
+        }
+
+        // Attach event listeners
+        function attachEventListeners() {
+            nextBtn.addEventListener('click', nextScreen);
+            prevBtn.addEventListener('click', previousScreen);
+            finishBtn.addEventListener('click', finish);
+            skipBtn.addEventListener('click', skipOnboarding);
+        }
+
+        // Navigation functions
+        function nextScreen() {
+            if (currentScreen < totalScreens) {
+                currentScreen++;
+                localStorage.setItem('currentScreen', currentScreen);
+                updateUI();
+            }
+        }
+
+        function previousScreen() {
+            if (currentScreen > 1) {
+                currentScreen--;
+                localStorage.setItem('currentScreen', currentScreen);
+                updateUI();
+            }
+        }
+
+        // Update UI state
+        function updateUI() {
+            screenElements.forEach(screen => {
+                const screenNumber = parseInt(screen.dataset.screen);
+                screen.classList.toggle('active', screenNumber === currentScreen);
+            });
+
+            progressDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index < currentScreen);
+            });
+
+            prevBtn.classList.toggle('hidden', currentScreen === 1);
+            nextBtn.classList.toggle('hidden', currentScreen === totalScreens);
+            finishBtn.classList.toggle('hidden', currentScreen !== totalScreens);
+        }
+
+        // Finish onboarding
+        function finish() {
+            localStorage.setItem('onboardingCompleted', 'true');
+            localStorage.removeItem('currentScreen');
+            alert('Onboarding completed!');
+            // window.location.href = '/dashboard';
+        }
+
+        // Add skip functionality
+        function skipOnboarding() {
+            if (confirm('Are you sure you want to skip the onboarding process?')) {
+                // Go to last screen
+                currentScreen = totalScreens;
+                localStorage.setItem('currentScreen', currentScreen);
+                updateUI();
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initOnboarding);
+    </script>
+</body>
+
+</html>

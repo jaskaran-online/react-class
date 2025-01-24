@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JavaScript Properties and Attributes Tutorial</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+            transition: background-color 0.3s;
+        }
+
+        .box {
+            width: 200px;
+            height: 100px;
+            border: 2px solid black;
+            margin: 10px;
+            padding: 10px;
+        }
+
+        .rounded {
+            border-radius: 10px;
+        }
+
+        .success {
+            background-color: #90EE90;
+            border-color: green;
+        }
+
+        .error {
+            background-color: #FFB6C1;
+            border-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>JavaScript Properties and Attributes Manipulation</h1>
+
+    <!-- Properties Example -->
+    <section>
+        <h2>Properties Manipulation</h2>
+        <div id="propertyBox" class="box">
+            This box will demonstrate property changes
+        </div>
+        <button onclick="changeProperties()">Change Properties</button>
+    </section>
+
+    <!-- Attributes Example -->
+    <section>
+        <h2>Attributes Manipulation</h2>
+        <input type="text" id="inputField" placeholder="Enter text">
+        <button onclick="toggleDisabled()">Toggle Disabled</button>
+    </section>
+
+    <!-- classList Example -->
+    <section>
+        <h2>classList Methods</h2>
+        <div id="classBox" class="box">
+            This box will demonstrate classList methods
+        </div>
+        <button onclick="addClassDemo()">Add Class</button>
+        <button onclick="removeClassDemo()">Remove Class</button>
+        <button onclick="toggleClassDemo()">Toggle Class</button>
+    </section>
+
+    <!-- Custom Attributes Example -->
+    <section>
+        <h2>Custom Attributes (data-*)</h2>
+        <div id="customBox" class="box" data-status="normal" data-message="Click to change status">
+            This box uses custom data attributes
+        </div>
+        <button onclick="changeCustomAttribute()">Change Status</button>
+    </section>
+
+    <script>
+        /**
+         * PROPERTIES MANIPULATION
+         * Properties are direct JavaScript object properties of DOM elements
+         */
+        function changeProperties() {
+            const box = document.getElementById('propertyBox');
+            box.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+            box.style.width = '250px';
+            box.innerHTML = 'Properties changed at: ' + new Date().toLocaleTimeString();
+        }
+
+        /**
+         * ATTRIBUTES MANIPULATION
+         * Attributes are defined in the HTML and can be manipulated using 
+         * getAttribute() and setAttribute() methods
+         */
+        function toggleDisabled() {
+            const input = document.getElementById('inputField');
+            if (input.hasAttribute('disabled')) {
+                input.removeAttribute('disabled');
+            } else {
+                input.setAttribute('disabled', '');
+            }
+        }
+
+        /**
+         * CLASSLIST METHODS
+         * classList provides methods to manipulate element classes
+         */
+        function addClassDemo() {
+            const box = document.getElementById('classBox');
+            box.classList.add('success');
+        }
+
+        function removeClassDemo() {
+            const box = document.getElementById('classBox');
+            box.classList.remove('success');
+        }
+
+        function toggleClassDemo() {
+            const box = document.getElementById('classBox');
+            box.classList.toggle('rounded');
+        }
+
+        /**
+         * CUSTOM DATA ATTRIBUTES
+         * data-* attributes provide a way to store custom data
+         */
+        function changeCustomAttribute() {
+            const box = document.getElementById('customBox');
+            const currentStatus = box.dataset.status;
+
+            if (currentStatus === 'normal') {
+                box.dataset.status = 'active';
+                box.classList.add('success');
+                box.dataset.message = 'Active status!';
+            } else {
+                box.dataset.status = 'normal';
+                box.classList.remove('success');
+                box.dataset.message = 'Click to change status';
+            }
+
+            box.textContent = `Status: ${box.dataset.status}\nMessage: ${box.dataset.message}`;
+        }
+
+        // Event listener to demonstrate attribute changes
+        document.getElementById('customBox').addEventListener('click', function () {
+            alert(this.dataset.message);
+        });
+    </script>
+</body>
+
+</html>

@@ -2,26 +2,160 @@
 <html>
 
 <head>
-    <title>DOM Text Change Example</title>
+    <title>DOM Traversal Examples</title>
+    <style>
+        .highlight {
+            background-color: yellow;
+        }
+
+        .family {
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="example">Hello, <span>world!</span></div>
+    <div id="root" class="family">
+        <h2>DOM Traversal Demo</h2>
+
+        <!-- Parent-Child Example -->
+        <div id="parent" class="family">
+            <h3>Parent Element</h3>
+            <div id="child1">First Child</div>
+            <div id="child2">Second Child</div>
+            <div id="child3">Third Child</div>
+        </div>
+
+        <!-- Sibling Example -->
+        <div id="siblings" class="family">
+            <h3>Sibling Elements</h3>
+            <ul id="siblingList">
+                <li>First Sibling</li>
+                <li>Second Sibling</li>
+                <li>Third Sibling</li>
+            </ul>
+        </div>
+
+        <!-- Complex Nested Example -->
+        <div id="nested" class="family">
+            <h3>Nested Elements</h3>
+            <div class="level1">
+                Level 1
+                <div class="level2">
+                    Level 2
+                    <div class="level3">Level 3</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Select the element
-        const element = document.getElementById('example');
+        /**
+         * DOM TRAVERSAL METHODS EXPLANATION
+         * 
+         * There are two main types of nodes in the DOM:
+         * 1. Element nodes: Actual HTML elements
+         * 2. Text nodes: Text content, including whitespace
+         * 
+         * The following methods help navigate these nodes:
+         */
 
-        // Change text using innerText
-        element.innerText = 'Changed using innerText';
+        // ========== PARENT TRAVERSAL ==========
+        const child2 = document.getElementById('child2');
 
-        // Change text using textContent
-        // element.textContent = 'Changed using textContent';
+        // parentNode: Returns the parent node (can be any node type)
+        // Always exists unless it's the document node
+        console.log('Parent Node:', child2.parentNode);
 
-        // Change HTML using innerHTML
-        // element.innerHTML = 'Changed using <b>innerHTML</b>';
+        // parentElement: Returns the parent element node
+        // Returns null if the parent is not an element node
+        console.log('Parent Element:', child2.parentElement);
 
-        // Change outer HTML using outerHTML
-        // element.outerHTML = '<p>Changed using outerHTML</p>';
+        // ========== CHILD TRAVERSAL ==========
+        const parent = document.getElementById('parent');
+
+        // childNodes: Returns all child nodes (including text nodes)
+        // Returns a live NodeList containing all child nodes
+        console.log('Child Nodes:', parent.childNodes);
+
+        // children: Returns only element nodes
+        // Returns a live HTMLCollection of child elements
+        console.log('Children:', parent.children);
+
+        // firstChild: Returns the first child node (including text nodes)
+        // Often returns a text node (whitespace) in formatted HTML
+        console.log('First Child:', parent.firstChild);
+
+        // firstElementChild: Returns the first element node
+        // Skips text nodes, returns only HTML elements
+        console.log('First Element Child:', parent.firstElementChild);
+
+        // lastChild: Returns the last child node (including text nodes)
+        console.log('Last Child:', parent.lastChild);
+
+        // lastElementChild: Returns the last element node
+        console.log('Last Element Child:', parent.lastElementChild);
+
+        // ========== SIBLING TRAVERSAL ==========
+        const child1 = document.getElementById('child1');
+
+        // nextSibling: Returns the next sibling node (including text nodes)
+        // Often returns text nodes (whitespace) in formatted HTML
+        console.log('Next Sibling:', child1.nextSibling);
+
+        // nextElementSibling: Returns the next element sibling
+        // Skips text nodes, returns only HTML elements
+        console.log('Next Element Sibling:', child1.nextElementSibling);
+
+        // previousSibling: Returns the previous sibling node
+        console.log('Previous Sibling:', child2.previousSibling);
+
+        // previousElementSibling: Returns the previous element sibling
+        console.log('Previous Element Sibling:', child2.previousElementSibling);
+
+        /**
+         * PRACTICAL DEMONSTRATION
+         * The following code shows practical usage of DOM traversal
+         */
+
+        // Utility function to highlight elements
+        function highlight(element) {
+            element.classList.add('highlight');
+            setTimeout(() => element.classList.remove('highlight'), 1500);
+        }
+
+        // Interactive example showing relationships
+        document.getElementById('root').addEventListener('click', function (e) {
+            const target = e.target;
+            if (target.id) {
+                console.log('Clicked element:', target);
+                highlight(target);
+
+                // Demonstrate parent relationship
+                if (target.parentElement) highlight(target.parentElement);
+
+                // Demonstrate sibling relationships
+                if (target.nextElementSibling) highlight(target.nextElementSibling);
+                if (target.previousElementSibling) highlight(target.previousElementSibling);
+
+                // Demonstrate child relationships
+                Array.from(target.children).forEach(child => highlight(child));
+            }
+        });
+
+        /**
+         * ADVANCED TRAVERSAL EXAMPLE
+         * Walking up the DOM tree using a while loop
+         */
+        const level3 = document.querySelector('.level3');
+        console.log('Traversing up from level 3:');
+        let current = level3;
+        while (current.parentElement) {
+            console.log(current.parentElement);
+            current = current.parentElement;
+        }
     </script>
 </body>
 
